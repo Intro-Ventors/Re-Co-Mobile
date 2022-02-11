@@ -1,4 +1,4 @@
-# Re-Co
+# Re-Co Mobile
 
 Reality Core (Re-Co) for short is a virtual desktop solution which enables users to use mobile phones to interact with the desktop computer rather than investing on expensive dedicated VR gear.
 This repository contains the mobile application's codebase.
