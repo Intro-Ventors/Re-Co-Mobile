@@ -26,7 +26,7 @@ When building for Windows, make sure that you have the following dependencies.
 After the above dependencies are configured, clone this repository to a local directory.
 
 ```bash
-git clone https://github.com/DhirajWishal/Re-Co-Mobile {SOURCE}
+git clone https://github.com/Intro-Ventors/Re-Co-Mobile {SOURCE}
 cd {SOURCE}
 git submodule init
 git submodule update
