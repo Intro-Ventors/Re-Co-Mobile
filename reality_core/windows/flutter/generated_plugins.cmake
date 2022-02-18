@@ -3,7 +3,6 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-  flutter_gl_windows
 )
 
 set(PLUGIN_BUNDLED_LIBRARIES)

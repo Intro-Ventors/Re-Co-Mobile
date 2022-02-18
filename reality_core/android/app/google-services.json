@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "792973236059",
+    "project_id": "re-co-a4c19",
+    "storage_bucket": "re-co-a4c19.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:792973236059:android:13e8ce33111c3ea1cdec7e",
+        "android_client_info": {
+          "package_name": "com.intro_ventors.reality_core"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "792973236059-vjav167gut4ju89tlor9stlr5t1rt849.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4778iNX_P9cK2dJ2fOFn8CubZlJYmuao"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "792973236059-vjav167gut4ju89tlor9stlr5t1rt849.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
