@@ -1,21 +1,9 @@
 import 'dart:html_common';
 
-class Buffer{
+class Buffer {
+  void getBuffer() {}
 
+  void mapBuffer(size, offset) {}
 
-void getBuffer(){
-
-  
-  
-}
- 
-void mapBuffer(size, offset){
-
-
-}
-
-void unmapBuffer(){
-  
-}
-
+  void unmapBuffer() {}
 }

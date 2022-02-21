@@ -41,6 +41,7 @@ dependencies:
   firebase_core: ^1.6.0
   provider: ^6.0.2
   fluttertoast: ^8.0.8
+  vulkan: ^0.5.1
 
 dev_dependencies:
   flutter_test:
