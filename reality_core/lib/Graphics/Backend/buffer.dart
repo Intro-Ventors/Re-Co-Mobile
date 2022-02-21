@@ -1,4 +1,3 @@
-import 'dart:html_common';
 
 class Buffer{
 

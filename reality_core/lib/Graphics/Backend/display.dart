@@ -8,7 +8,7 @@ void getWindows(){
 }
 void isDeviceCompatible(device){
 
-  
+
 }
 
 }
