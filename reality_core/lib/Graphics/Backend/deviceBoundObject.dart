@@ -1,0 +1,8 @@
+class DeviceBoundObject{
+
+void getDeviceMemory(){
+  
+}
+
+
+}
