@@ -1,7 +1,7 @@
 class OffScreen{
 
 void getRenderedImage(){
-  
+
 }
 
 }

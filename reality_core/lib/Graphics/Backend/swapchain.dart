@@ -11,7 +11,7 @@ void getSwapChainImages(){
 
 void getDisplay () {
 
-  
+
 }
 
 

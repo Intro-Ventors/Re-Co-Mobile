@@ -1,7 +1,7 @@
 class DeviceBoundObject{
 
 void getDeviceMemory(){
-  
+
 }
 
 
