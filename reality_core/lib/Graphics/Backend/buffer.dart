@@ -1,5 +1,3 @@
-import 'dart:html_common';
-
 class Buffer {
   void getBuffer() {}
 
