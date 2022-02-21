@@ -1,10 +1,13 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:reality_core/screens/auth/register.dart';
 import 'package:reality_core/screens/home/home.dart';
+import 'package:reality_core/themes/loading.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -99,6 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           minWidth: MediaQuery.of(context).size.width,
           onPressed: () {
+            const LoadingAnimation();
             signIn(emailController.text, passwordController.text);
           },
           child: const Text(
@@ -169,7 +173,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   // login function
-  void signIn(String email, String password) async {
+  Future signIn(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       try {
         await _auth

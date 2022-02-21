@@ -13,9 +13,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Email And Password Login',
+      title: 'Re-Co',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.indigo,
       ),
       debugShowCheckedModeBanner: false,
       home: const LoginScreen(),
