@@ -1,8 +1,9 @@
+import 'backend_object.dart';
 import 'device.dart';
 import 'display.dart';
 import 'utilities.dart';
 
-class Instance {
+class Instance extends BackendObject {
   final bool isValidationEnabled;
 
   /// Construct the instance.
@@ -23,4 +24,7 @@ class Instance {
   Display createDisplay(Extent2D extent) {
     return Display(this, extent);
   }
+
+  @override
+  void destroy() {}
 }

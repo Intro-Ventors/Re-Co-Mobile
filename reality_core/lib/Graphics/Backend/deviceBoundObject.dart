@@ -1,7 +1,7 @@
 import 'device.dart';
-import 'deviceReference.dart';
+import 'device_reference.dart';
 
-class DeviceBoundObject extends DeviceReference {
+abstract class DeviceBoundObject extends DeviceReference {
   var mMemoryType;
 
   /// Construct the device bound object using the parent [device] and its [memoryType].

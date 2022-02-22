@@ -1,5 +1,5 @@
 import 'device.dart';
-import 'deviceReference.dart';
+import 'device_reference.dart';
 import 'display.dart';
 
 class Swapchain extends DeviceReference {
@@ -19,8 +19,9 @@ class Swapchain extends DeviceReference {
   }
 
   void getSwapChain() {}
-
   void getSwapChainImages() {}
-
   void getDisplay() {}
+
+  @override
+  void destroy() {}
 }

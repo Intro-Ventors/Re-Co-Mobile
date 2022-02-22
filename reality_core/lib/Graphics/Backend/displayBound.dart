@@ -13,5 +13,11 @@ class DisplayBound extends RenderTarget {
         mPresentMode = presentMode,
         super(device, frameCount, display.getExtent()) {}
 
-  void getSwapchain() {}
+  /// Get the swapchain bound to this render target.
+  Swapchain getSwapchain() {
+    return mSwapchain;
+  }
+
+  @override
+  void destroy() {}
 }

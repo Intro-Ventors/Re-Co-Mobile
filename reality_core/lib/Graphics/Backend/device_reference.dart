@@ -1,6 +1,7 @@
+import 'backend_object.dart';
 import 'device.dart';
 
-class DeviceReference {
+abstract class DeviceReference extends BackendObject {
   final Device mDevice;
 
   /// Construct the device reference using the parent [device].

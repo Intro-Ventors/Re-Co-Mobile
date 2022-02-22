@@ -20,6 +20,9 @@ class Buffer extends DeviceBoundObject {
     return mSize;
   }
 
+  @override
+  void destroy() {}
+
   /// Get the type of this buffer.
   // var getType() {
   //   return mType;

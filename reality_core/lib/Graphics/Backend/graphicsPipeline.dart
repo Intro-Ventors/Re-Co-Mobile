@@ -1,5 +1,5 @@
 import 'device.dart';
-import 'deviceReference.dart';
+import 'device_reference.dart';
 import 'renderTarget.dart';
 
 class GraphicsPipeline extends DeviceReference {
@@ -23,4 +23,7 @@ class GraphicsPipeline extends DeviceReference {
   RenderTarget getRenderTarget() {
     return mRenderTarget;
   }
+
+  @override
+  void destroy() {}
 }

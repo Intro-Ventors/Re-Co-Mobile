@@ -1,5 +1,5 @@
 import 'device.dart';
-import 'deviceReference.dart';
+import 'device_reference.dart';
 
 class Shader extends DeviceReference {
   var mType;
@@ -11,4 +11,7 @@ class Shader extends DeviceReference {
 
   void getModule() {}
   void getDescriptorLayout() {}
+
+  @override
+  void destroy() {}
 }

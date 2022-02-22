@@ -1,5 +1,5 @@
 import 'device.dart';
-import 'deviceReference.dart';
+import 'device_reference.dart';
 
 class OneTimeCommandBuffer extends DeviceReference {
   /// Construct the one time command buffer using its parent [device].
@@ -7,4 +7,7 @@ class OneTimeCommandBuffer extends DeviceReference {
 
   void getCommandBuffer() {}
   void getCommandPool() {}
+
+  @override
+  void destroy() {}
 }

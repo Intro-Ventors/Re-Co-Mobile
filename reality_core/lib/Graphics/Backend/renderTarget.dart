@@ -1,8 +1,8 @@
 import 'device.dart';
-import 'deviceReference.dart';
+import 'device_reference.dart';
 import 'utilities.dart';
 
-class RenderTarget extends DeviceReference {
+abstract class RenderTarget extends DeviceReference {
   int mFrameIndex = 0;
   final int mFrameCount;
   final Extent2D mExtent;

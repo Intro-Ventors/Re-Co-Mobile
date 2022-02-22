@@ -22,4 +22,7 @@ class Image extends DeviceBoundObject {
   void getImageView() {}
   void getImageSampler() {}
   void copyFromStagingBugger(Buffer buffer) {}
+
+  @override
+  void destroy() {}
 }

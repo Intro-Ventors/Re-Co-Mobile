@@ -3,6 +3,7 @@ import 'displayBound.dart';
 import 'graphicsPipeline.dart';
 import 'image.dart';
 import 'instance.dart';
+import 'instance_bound_object.dart';
 import 'offScreen.dart';
 import 'oneTimeCommandBuffer.dart';
 import 'renderTarget.dart';
@@ -10,11 +11,9 @@ import 'shader.dart';
 import 'display.dart';
 import 'utilities.dart';
 
-class Device {
-  final Instance mInstance;
-
+class Device extends InstanceBoundObject {
   /// Construct the device using its parent [instance].
-  Device(Instance instance) : mInstance = instance {}
+  Device(Instance instance) : super(instance) {}
 
   void getLogicalDevice() {}
   void getPhysicalDevice() {}
@@ -58,4 +57,7 @@ class Device {
   }
 
   void createDescriptorSetManager() {}
+
+  @override
+  void destroy() {}
 }
