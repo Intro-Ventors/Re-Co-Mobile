@@ -1,6 +1,8 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:reality_core/screens/auth/signIn.dart';
+import 'package:page_transition/page_transition.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +20,15 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.indigo,
       ),
       debugShowCheckedModeBanner: false,
-      home: const LoginScreen(),
+      home: AnimatedSplashScreen(
+        splash: 'assets/images/logo_icon.png',
+        nextScreen: const LoginScreen(),
+        splashTransition: SplashTransition.scaleTransition,
+        pageTransitionType: PageTransitionType.fade,
+        splashIconSize: 200,
+        duration: 3000,
+        backgroundColor: Colors.cyan,
+      ),
     );
   }
 }
