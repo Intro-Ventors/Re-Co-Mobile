@@ -1,36 +1,67 @@
-class Device {
+import 'buffer.dart';
+import 'descriptor_set_manager.dart';
+import 'displayBound.dart';
+import 'graphicsPipeline.dart';
+import 'image.dart';
+import 'instance.dart';
+import 'instance_bound_object.dart';
+import 'offScreen.dart';
+import 'oneTimeCommandBuffer.dart';
+import 'renderTarget.dart';
+import 'shader.dart';
+import 'display.dart';
+import 'utilities.dart';
 
-  void getLogicalDevice(){
+class Device extends InstanceBoundObject {
+  /// Construct the device using its parent [instance].
+  Device(Instance instance) : super(instance) {}
 
+  void getLogicalDevice() {}
+  void getPhysicalDevice() {}
+
+  /// Create a new buffer object.
+  Buffer createBuffer(int size, var bufferType) {
+    return Buffer(this, size, bufferType);
   }
-  void getPhysicalDevice(){
 
-
+  /// Create a new image object.
+  Image createImage(Extent3D extent, var imageType, int layers, int mipLevel) {
+    return Image(this, extent, imageType, layers, mipLevel);
   }
-  void createBuffer(size, bufferType){
 
+  /// Create a new shader.
+  Shader createShader(List<int> code, var type) {
+    return Shader(this, code, type);
   }
-  void createImage(extent, imageType, layers, mipLevel){
 
+  /// Create a new graphics pipeline.
+  GraphicsPipeline createGraphicsPipeline(
+      var specification, List<Shader> shaders, RenderTarget renderTarget) {
+    return GraphicsPipeline(this, specification, shaders, renderTarget);
   }
-  void createShader(code, type){
 
+  /// Create a new one time command buffer.
+  /// These command buffers are scope based and is intended to be used as a single shot.
+  OneTimeCommandBuffer createOneTimeCommandBuffer() {
+    return OneTimeCommandBuffer(this);
   }
-  void createGraphicsPipeline(specification, shaders, renderTarget){
 
+  /// Create an off screen render target.
+  OffScreen createOffScreenRenderTarget(int imageCount, Extent2D extent) {
+    return OffScreen(this, imageCount, extent);
   }
-  void createOneTimeCommandBuffer(){
 
+  /// Create a display bound render target.
+  DisplayBound createDisplayBoundRenderTarget(
+      Display display, int frameCount, var presentMode) {
+    return DisplayBound(this, frameCount, display, presentMode);
   }
-  void createOffScreenRenderTarget(imageCount,extent){
 
+  /// Create a descriptor set manager.
+  DescriptorSetManager createDescriptorSetManager() {
+    return DescriptorSetManager(this);
   }
-  void createDisplayBoundRenderTarget(display,presentmode){
 
-  }
-  void createDescriptorSetManager(){
-
-  }
+  @override
+  void destroy() {}
 }
-
-

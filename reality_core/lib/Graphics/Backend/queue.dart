@@ -1,22 +1,32 @@
-class Queue{
+import 'device.dart';
+import 'device_reference.dart';
 
-void getGraphicsQueue(){
+class Queue extends DeviceReference {
+  int? mGraphicsFamily;
+  int? mTransferFamily;
 
-  
-}
-void getTransferQueue(){
+  /// Create the queue using the [device] its bound to.
+  Queue(Device device) : super(device) {}
 
-}
-void getGraphicsFamily(){
+  void getGraphicsQueue() {}
+  void getTransferQueue() {}
 
-}
-void getTransferFamily(){
+  /// Get the graphics family. The return can be null.
+  int? getGraphicsFamily() {
+    return mGraphicsFamily;
+  }
 
+  /// Get the transfer family. The return can be null.
+  int? getTransferFamily() {
+    return mTransferFamily;
+  }
 
-}
-void isComplete(){
+  /// Check if the queue is complete and contains the data we need.
+  /// A queue is considered as complete if both the graphics and transfer families are not null.
+  bool isComplete() {
+    return mGraphicsFamily != null && mTransferFamily != null;
+  }
 
-  
-}
-
+  @override
+  void destroy() {}
 }

@@ -1,7 +1,0 @@
-class OffScreen{
-
-void getRenderedImage(){
-
-}
-
-}

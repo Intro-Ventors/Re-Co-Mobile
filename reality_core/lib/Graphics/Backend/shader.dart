@@ -1,12 +1,17 @@
-class Shader {
+import 'device.dart';
+import 'device_reference.dart';
 
-void getModule(){
+class Shader extends DeviceReference {
+  var mType;
 
+  /// Construct the shader using its parent [device], the shader [code] and its [type].
+  Shader(Device device, List<int> code, var type)
+      : mType = type,
+        super(device) {}
 
-}
+  void getModule() {}
+  void getDescriptorLayout() {}
 
-void getDescriptorLayout(){
-
-  
-}
+  @override
+  void destroy() {}
 }
