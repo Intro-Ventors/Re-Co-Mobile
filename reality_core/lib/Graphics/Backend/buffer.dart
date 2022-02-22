@@ -1,7 +1,9 @@
-class Buffer {
+import 'deviceBoundObject.dart';
+
+class Buffer extends DeviceBoundObject {
   void getBuffer() {}
 
-  void mapBuffer(size, offset) {}
+  void mapBuffer(int size, int offset) {}
 
   void unmapBuffer() {}
 }

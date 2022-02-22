@@ -1,14 +1,5 @@
-class Display{
-void getSurface(){
-
-}
-void getWindows(){
-
-
-}
-void isDeviceCompatible(device){
-
-
-}
-
+class Display {
+  void getSurface() {}
+  void getWindows() {}
+  void isDeviceCompatible(device) {}
 }

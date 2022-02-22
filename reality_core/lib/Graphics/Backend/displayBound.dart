@@ -1,8 +1,3 @@
-class DisplayBound{
-void getSwapchain(){
-
-
-}
-
-
+class DisplayBound {
+  void getSwapchain() {}
 }

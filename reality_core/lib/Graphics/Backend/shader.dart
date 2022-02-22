@@ -1,12 +1,5 @@
 class Shader {
+  void getModule() {}
 
-void getModule(){
-
-
-}
-
-void getDescriptorLayout(){
-
-  
-}
+  void getDescriptorLayout() {}
 }

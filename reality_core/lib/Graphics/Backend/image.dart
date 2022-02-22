@@ -1,23 +1,9 @@
-class Image{
+import 'deviceBoundObject.dart';
 
-void getimage(){
+class Image  extends DeviceBoundObject {
+  void getImage() {}
 
-
-}
-
-void getImageView(){
-
-
-}
-void getImageSampler(){
-
-
-
-}
-void copyFromStagingBugger(buffer){
-
-
-}
-
-
+  void getImageView() {}
+  void getImageSampler() {}
+  void copyFromStagingBugger(buffer) {}
 }

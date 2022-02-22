@@ -1,19 +1,11 @@
+import 'display.dart';
+
 class Swapchain {
-void getSwapChain(){
+  Display? mDisplay;
 
+  void getSwapChain() {}
 
-}
+  void getSwapChainImages() {}
 
-void getSwapChainImages(){
-
-
-}
-
-void getDisplay () {
-
-
-}
-
-
-
+  void getDisplay() {}
 }

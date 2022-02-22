@@ -1,18 +1,6 @@
-class GraphicsPipeline{
-
-void getPipeline(){
-
-
-}
-void getPipelineLayout(){
-
-
-}
-  void getPipelineCache(){
-
-  }
-  void getRenderTarget(){
-
-    
-  }
+class GraphicsPipeline {
+  void getPipeline() {}
+  void getPipelineLayout() {}
+  void getPipelineCache() {}
+  void getRenderTarget() {}
 }

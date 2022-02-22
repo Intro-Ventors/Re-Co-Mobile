@@ -1,7 +1,3 @@
-class OffScreen{
-
-void getRenderedImage(){
-
-}
-
+class OffScreen {
+  void getRenderedImage() {}
 }

@@ -1,11 +1,4 @@
 class OneTimeCommandBuffer {
-void getCommandBuffer(){
-
-
-}
-void getCommandPool(){
-
-  
-} 
-
+  void getCommandBuffer() {}
+  void getCommandPool() {}
 }
