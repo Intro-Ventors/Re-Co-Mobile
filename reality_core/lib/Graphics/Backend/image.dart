@@ -1,6 +1,6 @@
 import 'buffer.dart';
 import 'device.dart';
-import 'deviceBoundObject.dart';
+import 'device_bound_object.dart';
 import 'utilities.dart';
 
 class Image extends DeviceBoundObject {

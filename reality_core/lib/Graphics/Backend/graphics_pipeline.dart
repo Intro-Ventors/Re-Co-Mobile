@@ -1,6 +1,6 @@
 import 'device.dart';
 import 'device_reference.dart';
-import 'renderTarget.dart';
+import 'render_target.dart';
 import 'shader.dart';
 
 class GraphicsPipeline extends DeviceReference {

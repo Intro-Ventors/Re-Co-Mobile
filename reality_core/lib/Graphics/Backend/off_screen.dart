@@ -1,5 +1,5 @@
 import 'device.dart';
-import 'renderTarget.dart';
+import 'render_target.dart';
 import 'utilities.dart';
 
 class OffScreen extends RenderTarget {

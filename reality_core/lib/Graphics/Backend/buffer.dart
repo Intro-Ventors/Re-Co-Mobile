@@ -1,5 +1,5 @@
 import 'device.dart';
-import 'deviceBoundObject.dart';
+import 'device_bound_object.dart';
 
 class Buffer extends DeviceBoundObject {
   final int mSize;
