@@ -5,7 +5,7 @@ import 'graphics_pipeline.dart';
 import 'image.dart';
 import 'instance.dart';
 import 'instance_bound_object.dart';
-import 'offScreen.dart';
+import 'off_screen.dart';
 import 'one_time_command_buffer.dart';
 import 'render_target.dart';
 import 'shader.dart';
