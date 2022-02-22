@@ -1,6 +1,17 @@
-class RenderTarget {
+import 'device.dart';
+import 'device_reference.dart';
+import 'utilities.dart';
+
+abstract class RenderTarget extends DeviceReference {
   int mFrameIndex = 0;
-  int mFrameCount = 0;
+  final int mFrameCount;
+  final Extent2D mExtent;
+
+  /// Construct the render target using the [device], [frameCount] and the [extent].
+  RenderTarget(Device device, int frameCount, Extent2D extent)
+      : mFrameCount = frameCount,
+        mExtent = extent,
+        super(device) {}
 
   void getFrameBuffers() {}
   void getRenderPass() {}
