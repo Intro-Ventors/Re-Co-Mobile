@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:reality_core/models/user.dart';
 import 'package:reality_core/screens/home/home.dart';
+import 'package:reality_core/themes/loading.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({Key? key}) : super(key: key);
@@ -178,6 +179,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           minWidth: MediaQuery.of(context).size.width,
           onPressed: () {
+            const LoadingAnimation(); //mot working
             signUp(emailEditingController.text, passwordEditingController.text);
           },
           child: const Text(
@@ -242,6 +244,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
   }
 
+  //registering new user
   void signUp(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       try {
