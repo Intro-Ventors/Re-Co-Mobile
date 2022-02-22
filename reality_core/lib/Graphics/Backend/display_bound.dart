@@ -1,6 +1,6 @@
 import 'device.dart';
 import 'display.dart';
-import 'renderTarget.dart';
+import 'render_target.dart';
 import 'swapchain.dart';
 
 class DisplayBound extends RenderTarget {
