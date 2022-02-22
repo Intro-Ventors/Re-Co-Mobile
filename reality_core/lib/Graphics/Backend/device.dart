@@ -1,4 +1,5 @@
 import 'buffer.dart';
+import 'descriptor_set_manager.dart';
 import 'displayBound.dart';
 import 'graphicsPipeline.dart';
 import 'image.dart';
@@ -29,13 +30,13 @@ class Device extends InstanceBoundObject {
   }
 
   /// Create a new shader.
-  Shader createShader(var code, var type) {
+  Shader createShader(List<int> code, var type) {
     return Shader(this, code, type);
   }
 
   /// Create a new graphics pipeline.
   GraphicsPipeline createGraphicsPipeline(
-      var specification, var shaders, RenderTarget renderTarget) {
+      var specification, List<Shader> shaders, RenderTarget renderTarget) {
     return GraphicsPipeline(this, specification, shaders, renderTarget);
   }
 
@@ -56,7 +57,10 @@ class Device extends InstanceBoundObject {
     return DisplayBound(this, frameCount, display, presentMode);
   }
 
-  void createDescriptorSetManager() {}
+  /// Create a descriptor set manager.
+  DescriptorSetManager createDescriptorSetManager() {
+    return DescriptorSetManager(this);
+  }
 
   @override
   void destroy() {}

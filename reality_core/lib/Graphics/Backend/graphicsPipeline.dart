@@ -1,15 +1,16 @@
 import 'device.dart';
 import 'device_reference.dart';
 import 'renderTarget.dart';
+import 'shader.dart';
 
 class GraphicsPipeline extends DeviceReference {
   var mSpecification;
-  var mShaders;
+  final List<Shader> mShaders;
   final RenderTarget mRenderTarget;
 
   /// Construct the graphics pipeline using its parent [device], [specification], [shaders] and [renderTarget] to which the rendered images are presented to.
   GraphicsPipeline(
-      Device device, var specification, var shaders, RenderTarget renderTarget)
+      Device device, var specification, List<Shader> shaders, RenderTarget renderTarget)
       : mSpecification = specification,
         mShaders = shaders,
         mRenderTarget = renderTarget,
