@@ -1,3 +1,5 @@
+import 'package:vulkan/vulkan.dart';
+
 class Extent2D {
   int mWidth = 0;
   int mHeight = 0;
@@ -43,4 +45,13 @@ class Extent3D {
     mDepth = depth;
     return this;
   }
+}
+
+/// Make a version integer out of the [major], [minor] and [patch] versions.
+int makeVersion(int major, int minor, int patch) =>
+    ((major) << 22) | ((minor) << 12) | (patch);
+
+/// Validate a Vulkan [result]. This will print out a [message] if the result is not equal to `VK_SUCCESS`.
+void validateResult(final int result, String message) {
+  if (result != VK_SUCCESS) print(message);
 }
