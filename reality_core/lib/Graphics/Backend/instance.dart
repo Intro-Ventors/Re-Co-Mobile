@@ -119,6 +119,16 @@ class Instance extends BackendObject {
     return vDebugMessenger;
   }
 
+  /// Get the stored layer count.
+  int getLayerCount() {
+    return mLayerCount;
+  }
+
+  /// Get the layers.
+  Pointer<Pointer<Utf8>> getLayers() {
+    return pLayers;
+  }
+
   /// Create a new device.
   Device createDevice() {
     return Device(this);
