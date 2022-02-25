@@ -9,7 +9,7 @@ class Buffer extends DeviceBoundObject {
   Buffer(Device device, int size, var type)
       : mSize = size,
         mType = type,
-        super(device, null) {}
+        super(device) {}
 
   void getBuffer() {}
   void mapBuffer(int size, int offset) {}

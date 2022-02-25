@@ -47,11 +47,21 @@ class Extent3D {
   }
 }
 
+class BackendError implements Exception {
+  final String mErrorMessage;
+
+  /// Create the backend error using an error [message]. This is optional.
+  BackendError([String message = ""]) : mErrorMessage = message;
+
+  // Get the error message.
+  String getMessage() => mErrorMessage;
+}
+
 /// Make a version integer out of the [major], [minor] and [patch] versions.
 int makeVersion(int major, int minor, int patch) =>
     ((major) << 22) | ((minor) << 12) | (patch);
 
 /// Validate a Vulkan [result]. This will print out a [message] if the result is not equal to `VK_SUCCESS`.
 void validateResult(final int result, String message) {
-  if (result != VK_SUCCESS) print(message);
+  if (result != VK_SUCCESS) throw BackendError(message);
 }
