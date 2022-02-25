@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:reality_core/models/user.dart';
 import 'package:reality_core/screens/auth/signIn.dart';
+import 'package:reality_core/screens/home/qr_code_scanner.dart';
 import 'package:reality_core/screens/home/settings.dart';
 
 class Home extends StatefulWidget {
@@ -237,35 +238,30 @@ class _HomeScreenState extends State<Home> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               SizedBox(
-                height: 150,
-                child: Image.asset("assets/images/logo_icon.png",
-                    fit: BoxFit.contain),
+                height: 250,
+                child: Container(
+                  height: 200.0,
+                  width: 200.0,
+                  child: FittedBox(
+                    child: FloatingActionButton(
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const QRScanner(),
+                        ));
+                      },
+                      child: const Icon(Icons.power_settings_new_rounded,
+                          size: 50),
+                    ),
+                  ),
+                ),
               ),
               const Text(
-                "Welcome Back",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                "Start Straming",
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
               ),
               const SizedBox(
                 height: 10,
               ),
-              Text("${loggedInUser.firstName} ${loggedInUser.secondName}",
-                  style: const TextStyle(
-                    color: Colors.black54,
-                    fontWeight: FontWeight.w500,
-                  )),
-              Text("${loggedInUser.email}",
-                  style: const TextStyle(
-                    color: Colors.black54,
-                    fontWeight: FontWeight.w500,
-                  )),
-              const SizedBox(
-                height: 15,
-              ),
-              ActionChip(
-                  label: const Text("Logout"),
-                  onPressed: () {
-                    logout(context);
-                  }),
             ],
           ),
         ),
