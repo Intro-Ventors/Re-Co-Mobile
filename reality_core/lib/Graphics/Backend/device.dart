@@ -1,5 +1,4 @@
 import 'dart:ffi';
-import 'dart:math';
 
 import 'package:ffi/ffi.dart';
 import 'package:vulkan/vulkan.dart';
@@ -54,8 +53,9 @@ class Device extends InstanceBoundObject {
   }
 
   /// Create a new image object.
-  Image createImage(Extent3D extent, var imageType, int layers, int mipLevel) {
-    return Image(this, extent, imageType, layers, mipLevel);
+  Image createImage(
+      Extent3D extent, int format, int imageType, int layers, int mipLevel) {
+    return Image(this, extent, format, imageType, layers, mipLevel);
   }
 
   /// Create a new shader.
