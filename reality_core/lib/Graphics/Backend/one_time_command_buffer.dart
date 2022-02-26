@@ -31,7 +31,7 @@ class OneTimeCommandBuffer extends DeviceReference {
       ..sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO
       ..pNext = nullptr
       ..pInheritanceInfo = nullptr
-      ..flags = 0;
+      ..flags = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
 
     // Begin recording.
     validateResult(vkBeginCommandBuffer(vCommandBuffer, vBeginInfo),
@@ -50,6 +50,10 @@ class OneTimeCommandBuffer extends DeviceReference {
   /// If [waitExecution] is set to false, this function will not wait until the
   /// recorded commands finishes execution. If set to true, this function will
   /// wait until the GPU finished all the recorded commands.
+  ///
+  /// If it's not waiting, make sure that you wait until the queue finishes
+  /// executing the commands before submitting or doing any other operation with
+  /// this command buffer.
   void execute([bool waitExecution = true]) {
     // Check and end the command buffer recording if the command buffer is still
     //on the recording state.
@@ -93,14 +97,14 @@ class OneTimeCommandBuffer extends DeviceReference {
             pFence.value),
         "Failed to submit the queue!");
 
-    // If enabled, wait till the GPU finishes the queue execution.
+    // If enabled, wait till the GPU finishes the queue execution and destroy
+    // the fence.
     if (waitExecution) {
-      vkWaitForFences(
-          mDevice.getLogicalDevice(), 1, pFence, VK_TRUE, 0xffffffffffffffff);
-    }
+      validateResult(
+          vkWaitForFences(mDevice.getLogicalDevice(), 1, pFence, VK_TRUE, -1),
+          "Failed to wait till the queue finished execution!");
 
-    // Destroy the fence if allocated.
-    if (waitExecution) {
+      // Destroy the fence.
       vkDestroyFence(mDevice.getLogicalDevice(), pFence.value, nullptr);
     }
   }
@@ -156,6 +160,7 @@ class OneTimeCommandBuffer extends DeviceReference {
     vCommandBuffer = pCommandBuffer.value;
   }
 
+  /// Destroy the one time command buffer.
   @override
   void destroy() {
     // If the command buffer is in the recording state, make sure to end it

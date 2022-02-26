@@ -30,16 +30,16 @@ class Instance extends BackendObject {
       ..applicationVersion = makeVersion(1, 0, 0)
       ..pEngineName = "Re-Co".toNativeUtf8()
       ..engineVersion = makeVersion(1, 0, 0)
-      ..apiVersion = makeVersion(1, 2, 0);
+      ..apiVersion = makeVersion(1, 1, 0);
 
     // Get the required instance extensions.
-    vkEnumerateInstanceExtensionProperties = Pointer<
-                NativeFunction<
-                    VkEnumerateInstanceExtensionPropertiesNative>>.fromAddress(
-            vkGetInstanceProcAddr(nullptr,
-                    'vkEnumerateInstanceExtensionProperties'.toNativeUtf8())
-                .address)
-        .asFunction<VkEnumerateInstanceExtensionProperties>();
+    //vkEnumerateInstanceExtensionProperties = Pointer<
+    //            NativeFunction<
+    //                VkEnumerateInstanceExtensionPropertiesNative>>.fromAddress(
+    //        vkGetInstanceProcAddr(nullptr,
+    //                'vkEnumerateInstanceExtensionProperties'.toNativeUtf8())
+    //            .address)
+    //    .asFunction<VkEnumerateInstanceExtensionProperties>();
 
     Pointer<Int32> extensionsCount = calloc<Int32>();
     vkEnumerateInstanceExtensionProperties(nullptr, extensionsCount, nullptr);
