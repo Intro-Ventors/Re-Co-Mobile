@@ -2,10 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:reality_core/models/user.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class PanelWidget extends StatefulWidget {
   final ScrollController controller;
-  const PanelWidget({Key? key, required this.controller}) : super(key: key);
+  final PanelController panelController;
+  const PanelWidget(
+      {Key? key, required this.controller, required this.panelController})
+      : super(key: key);
 
   @override
   _PanelWidgetState createState() => _PanelWidgetState();
@@ -33,6 +37,10 @@ class _PanelWidgetState extends State<PanelWidget> {
         padding: EdgeInsets.zero,
         children: <Widget>[
           const SizedBox(
+            height: 12,
+          ),
+          buildDragHandle(),
+          const SizedBox(
             height: 36,
           ),
           buildAboutText(),
@@ -41,6 +49,21 @@ class _PanelWidgetState extends State<PanelWidget> {
           ),
         ],
       );
+
+  Widget buildDragHandle() => GestureDetector(
+      child: Center(
+        child: Container(
+          width: 30,
+          height: 5,
+          decoration: BoxDecoration(
+              color: Colors.grey, borderRadius: BorderRadius.circular(18)),
+        ),
+      ),
+      onTap: togglePanel);
+
+  void togglePanel() => widget.panelController.isPanelOpen
+      ? widget.panelController.close()
+      : widget.panelController.open();
 
   Widget buildAboutText() => Container(
         padding: const EdgeInsets.symmetric(horizontal: 24),

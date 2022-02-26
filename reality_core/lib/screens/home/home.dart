@@ -1,11 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:reality_core/models/user.dart';
-import 'package:reality_core/screens/auth/signIn.dart';
 import 'package:reality_core/screens/home/bottom_panel.dart';
 import 'package:reality_core/screens/home/qr_code_scanner.dart';
-import 'package:reality_core/screens/home/settings.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import 'drawer.dart';
@@ -14,25 +9,11 @@ class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  HomeScreenState createState() => HomeScreenState();
 }
 
-class _HomeScreenState extends State<Home> {
-  User? user = FirebaseAuth.instance.currentUser;
-  UserModel loggedInUser = UserModel();
-
-  @override
-  void initState() {
-    super.initState();
-    FirebaseFirestore.instance
-        .collection("users")
-        .doc(user!.uid)
-        .get()
-        .then((value) {
-      this.loggedInUser = UserModel.fromMap(value.data());
-      setState(() {});
-    });
-  }
+class HomeScreenState extends State<Home> {
+  final panelController = PanelController();
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +46,7 @@ class _HomeScreenState extends State<Home> {
       body: SlidingUpPanel(
         body: Center(
           child: Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.fromLTRB(20, 20, 20, 100),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -99,7 +80,14 @@ class _HomeScreenState extends State<Home> {
             ),
           ),
         ),
-        panelBuilder: (controller) => PanelWidget(controller: controller),
+        controller: panelController,
+        panelBuilder: (controller) => PanelWidget(
+          controller: controller,
+          panelController: panelController,
+        ),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(12.0)),
+        parallaxEnabled: true,
+        parallaxOffset: 0.2,
       ),
     );
   }
