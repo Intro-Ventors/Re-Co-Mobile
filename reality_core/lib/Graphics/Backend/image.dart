@@ -171,6 +171,6 @@ class Image extends DeviceBoundObject {
     vkDestroyImageView(mDevice.getLogicalDevice(), vImageView, nullptr);
 
     // Destroy the image sampler.
-    vkDestroySampler(mDevice.getLogicalDevice(), vImageSampler, nullptr)
+    vkDestroySampler(mDevice.getLogicalDevice(), vImageSampler, nullptr);
   }
 }
