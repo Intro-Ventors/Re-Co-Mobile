@@ -8,6 +8,9 @@ import 'device.dart';
 import 'display.dart';
 import 'utilities.dart';
 
+@Array(256)
+typedef Array256 = Array<Uint8>;
+
 class Instance extends BackendObject {
   final bool isValidationEnabled;
   late Pointer<VkInstance> vInstance;
@@ -32,26 +35,18 @@ class Instance extends BackendObject {
       ..engineVersion = makeVersion(1, 0, 0)
       ..apiVersion = makeVersion(1, 1, 0);
 
-    // Get the required instance extensions.
-    //vkEnumerateInstanceExtensionProperties = Pointer<
-    //            NativeFunction<
-    //                VkEnumerateInstanceExtensionPropertiesNative>>.fromAddress(
-    //        vkGetInstanceProcAddr(nullptr,
-    //                'vkEnumerateInstanceExtensionProperties'.toNativeUtf8())
-    //            .address)
-    //    .asFunction<VkEnumerateInstanceExtensionProperties>();
+    // Setup the instance extensions.
+    const extensions = [
+      "VK_KHR_surface",
+      "VK_KHR_android_surface",
+      "VK_EXT_swapchain_colorspace",
+      "VK_EXT_debug_report"
+    ];
 
-    Pointer<Int32> extensionsCount = calloc<Int32>();
-    vkEnumerateInstanceExtensionProperties(nullptr, extensionsCount, nullptr);
-    final props = calloc<VkExtensionProperties>(extensionsCount.value);
-    vkEnumerateInstanceExtensionProperties(nullptr, extensionsCount, props);
-
-    // Create the new buffer to store the extension names and then iterate over
-    // the strings we got. Afterwards we can get and assign the names.
-    final Pointer<Pointer<Utf8>> nativeExtensions =
-        calloc<Pointer<Utf8>>(extensionsCount.value);
-    for (int i = 0; i < extensionsCount.value; i++) {
-      nativeExtensions[i] = props.elementAt(i).ref.toString().toNativeUtf8();
+    final instanceExtensions = calloc<Pointer<Utf8>>(extensions.length);
+    for (int i = 0; i < extensions.length; i++) {
+      final extensionName = extensions[i];
+      instanceExtensions.elementAt(i).value = extensionName.toNativeUtf8();
     }
 
     // Create the instance create info structure.
@@ -61,8 +56,8 @@ class Instance extends BackendObject {
       ..pNext = nullptr
       ..flags = 0
       ..pApplicationInfo = vApplicationInfo
-      ..enabledExtensionCount = extensionsCount.value
-      ..ppEnabledExtensionNames = nativeExtensions;
+      ..enabledExtensionCount = extensions.length
+      ..ppEnabledExtensionNames = instanceExtensions;
 
     // These are the validation layers we would need.
     const layers = ["VK_LAYER_KHRONOS_validation"];

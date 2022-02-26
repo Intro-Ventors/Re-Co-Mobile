@@ -177,8 +177,14 @@ class Device extends InstanceBoundObject {
     // required queues.
     for (var i = 0; i < count.value; i++) {
       final queueFamily = vQueueFamilyProps.elementAt(i).ref;
+      // Check if the queue family supports graphics commands. If so, select it.
       if (queueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT > 0) {
         graphicsFamily = i;
+      }
+
+      // Check if the queue family supports transfer commands. If so, select it.
+      if (queueFamily.queueFlags & VK_QUEUE_TRANSFER_BIT > 0) {
+        transferFamily = i;
       }
 
       // If its complete, we can break and return.

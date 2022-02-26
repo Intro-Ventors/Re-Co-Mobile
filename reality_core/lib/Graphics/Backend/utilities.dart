@@ -63,5 +63,7 @@ int makeVersion(int major, int minor, int patch) =>
 
 /// Validate a Vulkan [result]. This will print out a [message] if the result is not equal to `VK_SUCCESS`.
 void validateResult(final int result, String message) {
-  if (result != VK_SUCCESS) throw BackendError(message);
+  if (result != VK_SUCCESS) {
+    throw BackendError(message);
+  }
 }

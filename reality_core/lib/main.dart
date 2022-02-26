@@ -9,8 +9,11 @@ import 'package:page_transition/page_transition.dart';
 /// Function to test the Vulkan Backend.
 /// This is not permanent and is there just for debugging.
 void testVulkanBackend() {
-  Instance instance = Instance(true);
+  Instance instance = Instance(false);
   final device = instance.createDevice();
+
+  device.destroy();
+  instance.destroy();
 }
 
 void main() async {
