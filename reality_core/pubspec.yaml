@@ -41,10 +41,11 @@ dependencies:
   firebase_core: ^1.6.0
   provider: ^6.0.2
   fluttertoast: ^8.0.8
-  vulkan: ^0.5.1
   qr_code_scanner: ^0.7.0
   ffi: ^1.1.1
   sliding_up_panel: ^2.0.0+1
+  vulkan: 
+    path: ../third_party/dart-vulkan
 
 dev_dependencies:
   flutter_test:

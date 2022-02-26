@@ -64,18 +64,18 @@ class Instance extends BackendObject {
       ..enabledExtensionCount = extensionsCount.value
       ..ppEnabledExtensionNames = nativeExtensions;
 
+    // These are the validation layers we would need.
+    const layers = ["VK_LAYER_KHRONOS_validation"];
+
+    // Get the length and create the layers using the layer strings.
+    mLayerCount = layers.length;
+    pLayers = calloc<Pointer<Utf8>>(mLayerCount);
+    for (int i = 0; i < mLayerCount; i++) {
+      pLayers[i] = layers[i].toNativeUtf8();
+    }
+
     // Setup the validation layers if needed.
     if (enableValidation) {
-      // These are the validation layers we would need.
-      const layers = ["VK_LAYER_KHRONOS_validation"];
-
-      // Get the length and create the layers using the layer strings.
-      mLayerCount = layers.length;
-      pLayers = calloc<Pointer<Utf8>>(mLayerCount);
-      for (int i = 0; i < mLayerCount; i++) {
-        pLayers[i] = layers[i].toNativeUtf8();
-      }
-
       // Fill the required data to the create info structure.
       vInstanceCreateInfo.ref
         ..pNext = _createDebugMessengerCreateInfo()
@@ -158,10 +158,28 @@ class Instance extends BackendObject {
     vkDestroyInstance(vInstance, nullptr);
   }
 
+  /// Debug callback function.
+  int _debugCallback(
+      int severity, int type, Pointer callbackData, Pointer useData) {
+    return VK_FALSE;
+  }
+
   /// Create the debug messenger create info structure.
   Pointer<VkDebugUtilsMessengerCreateInfoEXT>
       _createDebugMessengerCreateInfo() {
     final vCreteInfo = calloc<VkDebugUtilsMessengerCreateInfoEXT>();
+    vCreteInfo.ref
+      ..sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT
+      ..pNext = nullptr
+      ..flags = 0
+      ..pUserData = nullptr
+      ..messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT |
+          VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT |
+          VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT
+      ..messageType = VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT |
+          VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT |
+          VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT
+      ..pfnUserCallback /* = _debugCallback */;
 
     return vCreteInfo;
   }
