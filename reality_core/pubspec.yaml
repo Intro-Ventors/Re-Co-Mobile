@@ -45,7 +45,7 @@ dependencies:
   ffi: ^1.1.1
   sliding_up_panel: ^2.0.0+1
   vulkan: 
-    path: ../third_party/dart-vulkan
+    path: third_party/dart-vulkan
 
 dev_dependencies:
   flutter_test:

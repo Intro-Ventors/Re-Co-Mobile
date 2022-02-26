@@ -332,7 +332,7 @@ packages:
   vulkan:
     dependency: "direct main"
     description:
-      path: "../third_party/dart-vulkan"
+      path: "third_party/dart-vulkan"
       relative: true
     source: path
     version: "0.5.1+2"
