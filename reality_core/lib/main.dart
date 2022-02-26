@@ -9,7 +9,7 @@ import 'package:page_transition/page_transition.dart';
 /// Function to test the Vulkan Backend.
 /// This is not permanent and is there just for debugging.
 void testVulkanBackend() {
-  Instance instance = Instance(false);
+  Instance instance = Instance(true);
   final device = instance.createDevice();
 
   device.destroy();
@@ -17,13 +17,14 @@ void testVulkanBackend() {
 }
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   try {
     testVulkanBackend(); // JUST FOR DEBUGGING!
   } catch (e) {
     print(e.toString());
   }
 
-  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
 }

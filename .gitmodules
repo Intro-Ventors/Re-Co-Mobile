@@ -1,3 +1,0 @@
-[submodule "reality_core/third_party/dart-vulkan"]
-	path = reality_core/third_party/dart-vulkan
-	url = https://github.com/Intro-Ventors/dart-vulkan

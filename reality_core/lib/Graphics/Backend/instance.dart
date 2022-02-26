@@ -17,6 +17,7 @@ class Instance extends BackendObject {
   late Pointer<VkDebugUtilsMessengerEXT> vDebugMessenger;
   late int mLayerCount = 0;
   late Pointer<Pointer<Utf8>> pLayers;
+  late DynamicLibrary mValidationLayer;
 
   /// Construct the instance.
   /// If [enableValidation] is set to true, it will generate the required
@@ -24,6 +25,8 @@ class Instance extends BackendObject {
   /// messenger. This might be slow and is not recommended when deploying the
   /// application, as its not needed then.
   Instance(bool enableValidation) : isValidationEnabled = enableValidation {
+    //_tryLoadValidationLayers();
+
     // Create the application info structure.
     final vApplicationInfo = calloc<VkApplicationInfo>();
     vApplicationInfo.ref
@@ -177,5 +180,10 @@ class Instance extends BackendObject {
       ..pfnUserCallback /* = _debugCallback */;
 
     return vCreteInfo;
+  }
+
+  void _tryLoadValidationLayers() {
+    mValidationLayer = DynamicLibrary.open(
+        "/data/usr/0/com.intro.ventors.reality.core/android/lib/arm64-v8a/libVkLayer_khronos_validation.so");
   }
 }
