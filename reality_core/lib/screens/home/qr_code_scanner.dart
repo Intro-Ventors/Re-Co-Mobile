@@ -57,6 +57,7 @@ class _QRScannerState extends State<QRScanner> {
         child: Text(
           barcode != null ? 'Result : ${barcode!.code} ' : ' Scan the Code',
           maxLines: 3,
+          style: const TextStyle(color: Colors.white),
         ),
       );
 

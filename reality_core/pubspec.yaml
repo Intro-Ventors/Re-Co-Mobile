@@ -44,6 +44,7 @@ dependencies:
   vulkan: ^0.5.1
   qr_code_scanner: ^0.7.0
   ffi: ^1.1.1
+  sliding_up_panel: ^2.0.0+1
 
 dev_dependencies:
   flutter_test:

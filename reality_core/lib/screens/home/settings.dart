@@ -24,3 +24,7 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 }
+//resolution
+//vertual bg
+//darkmode
+//datasaver
