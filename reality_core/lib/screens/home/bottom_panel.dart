@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:reality_core/models/user.dart';
+import 'package:reality_core/screens/home/edit_profile.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class PanelWidget extends StatefulWidget {
@@ -76,6 +77,14 @@ class _PanelWidgetState extends State<PanelWidget> {
                     color: Colors.black54,
                     fontWeight: FontWeight.bold,
                     fontSize: 20)),
+            FlatButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SettingsUI()),
+                  );
+                },
+                child: const Text('Edit Profile'))
           ],
         ),
       );
