@@ -22,6 +22,7 @@ class Device extends InstanceBoundObject {
   late Pointer<VkDevice> vLogicalDevice;
   late Pointer<VkPhysicalDevice> vPhysicalDevice;
   late Queue mQueue;
+  late OneTimeCommandBuffer mOneTimeCommandBuffer;
 
   /// Construct the device using its parent [instance].
   Device(Instance instance) : super(instance) {
@@ -30,6 +31,9 @@ class Device extends InstanceBoundObject {
 
     // Create a new logical device.
     _createLogicalDevice();
+
+    // Create the one time command buffer.
+    mOneTimeCommandBuffer = OneTimeCommandBuffer(this);
   }
 
   /// Get the logical device.
@@ -47,6 +51,26 @@ class Device extends InstanceBoundObject {
     return mQueue;
   }
 
+  /// Get the one time command buffer.
+  /// This can be used to send a burst of commands to the GPU to be executed.
+  ///
+  /// The normal usage would be,
+  /// ```dart
+  /// final commandBuffer = mDevice.getCommandBuffer();
+  /// commandBuffer.begin();
+  ///
+  /// // Record all your commands.
+  ///
+  /// commandBuffer.end();  // Optional
+  /// commandBuffer.execute();  // Execute the recorded commands.
+  /// ```
+  ///
+  /// Note that this command buffer cannot be used to carry out graphics
+  /// commands!
+  OneTimeCommandBuffer getCommandBuffer() {
+    return mOneTimeCommandBuffer;
+  }
+
   /// Create a new buffer object.
   Buffer createBuffer(int size, var bufferType) {
     return Buffer(this, size, bufferType);
@@ -59,8 +83,8 @@ class Device extends InstanceBoundObject {
   }
 
   /// Create a new shader.
-  Shader createShader(List<int> code, var type) {
-    return Shader(this, code, type);
+  Shader createShader(String file, var type) {
+    return Shader(this, file, type);
   }
 
   /// Create a new graphics pipeline.
@@ -153,8 +177,14 @@ class Device extends InstanceBoundObject {
     // required queues.
     for (var i = 0; i < count.value; i++) {
       final queueFamily = vQueueFamilyProps.elementAt(i).ref;
+      // Check if the queue family supports graphics commands. If so, select it.
       if (queueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT > 0) {
         graphicsFamily = i;
+      }
+
+      // Check if the queue family supports transfer commands. If so, select it.
+      if (queueFamily.queueFlags & VK_QUEUE_TRANSFER_BIT > 0) {
+        transferFamily = i;
       }
 
       // If its complete, we can break and return.
@@ -228,6 +258,9 @@ class Device extends InstanceBoundObject {
   /// Destroy the device.
   @override
   void destroy() {
+    // Destroy the one time command buffer.
+    mOneTimeCommandBuffer.destroy();
+
     // Destroy just the logical device. We cant destroy the hardware we're
     // running on :)
     vkDestroyDevice(vLogicalDevice, nullptr);
