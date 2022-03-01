@@ -103,7 +103,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           return null;
         },
         onSaved: (value) {
-          firstNameEditingController.text = value!;
+          emailEditingController.text = value!;
         },
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
@@ -208,20 +208,35 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           child: Container(
             color: Colors.blue[900],
             child: Padding(
-              padding: const EdgeInsets.all(36.0),
+              padding: const EdgeInsets.all(30.0),
               child: Form(
                 key: _formKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
+                    const Text(
+                      "New To Re-Co?",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30),
+                    ),
                     SizedBox(
                         height: 180,
                         child: Image.asset(
                           "assets/images/logo_icon.png",
                           fit: BoxFit.contain,
                         )),
-                    const SizedBox(height: 45),
+                    const SizedBox(height: 20),
+                    const Text(
+                      "Make an Account",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20),
+                    ),
+                    const SizedBox(height: 20),
                     firstNameField,
                     const SizedBox(height: 20),
                     secondNameField,
@@ -278,7 +293,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             errorMessage = "An undefined Error happened.";
         }
         Fluttertoast.showToast(msg: errorMessage!);
-        print(error.code);
       }
     }
   }

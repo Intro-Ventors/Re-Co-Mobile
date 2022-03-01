@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:reality_core/screens/auth/forgot_password.dart';
 import 'package:reality_core/screens/auth/register.dart';
 import 'package:reality_core/screens/home/home.dart';
 import 'package:reality_core/themes/loading.dart';
@@ -127,13 +128,30 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
+                    const Text(
+                      "Welcome To Reality Core",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30),
+                    ),
+                    const SizedBox(height: 25),
                     SizedBox(
-                        height: 200,
+                        height: 190,
                         child: Image.asset(
                           "assets/images/logo_icon.png",
                           fit: BoxFit.contain,
                         )),
-                    const SizedBox(height: 45),
+                    const SizedBox(height: 30),
+                    const Text(
+                      "SIGN-IN HERE",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                    ),
+                    const SizedBox(height: 25),
                     emailField,
                     const SizedBox(height: 25),
                     passwordField,
@@ -157,6 +175,26 @@ class _LoginScreenState extends State<LoginScreen> {
                               "SignUp",
                               style: TextStyle(
                                   color: Colors.blueGrey,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15),
+                            ),
+                          )
+                        ]),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ForgotPassword()));
+                            },
+                            child: const Text(
+                              "Forgot Password",
+                              style: TextStyle(
+                                  color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15),
                             ),
