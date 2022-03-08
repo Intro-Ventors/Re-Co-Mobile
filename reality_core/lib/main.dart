@@ -1,3 +1,6 @@
+import 'dart:ffi';
+import 'dart:io';
+
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +16,16 @@ void testVulkanBackend() {
 
   //device.destroy();
   //instance.destroy();
+
+  final DynamicLibrary nativeAddLib = Platform.isAndroid
+      ? DynamicLibrary.open('libgraphics_engine.so')
+      : DynamicLibrary.process();
+
+  final int Function(int x, int y) nativeAdd = nativeAddLib
+      .lookup<NativeFunction<Int32 Function(Int32, Int32)>>('native_add')
+      .asFunction();
+
+  int result = nativeAdd(10, 20);
 }
 
 void main() async {
