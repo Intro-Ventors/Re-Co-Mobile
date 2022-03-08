@@ -1,13 +1,15 @@
 #pragma once
 
-#include <GraphicsCore/Instance.hpp>
+#include <Firefly/Instance.hpp>
+#include <Firefly/Graphics/GraphicsEngine.hpp>
 
 /**
  * Engine class.
  */
 class Engine
 {
-	std::shared_ptr<GraphicsCore::Instance> m_pInstance = nullptr;
+	std::shared_ptr<Firefly::Instance> m_pInstance = nullptr;
+	std::shared_ptr<Firefly::GraphicsEngine> m_pGraphicsEngine = nullptr;
 
 public:
 	/**

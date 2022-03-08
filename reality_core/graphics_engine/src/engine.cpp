@@ -4,7 +4,10 @@
 Engine::Engine()
 {
 	// Create the Vulkan instance.
-	m_pInstance = GraphicsCore::Instance::create(false, VK_VERSION_1_1);
+	m_pInstance = Firefly::Instance::create(false, VK_VERSION_1_1);
+
+	// Create the graphics engine.
+	m_pGraphicsEngine = Firefly::GraphicsEngine::create(m_pInstance);
 }
 
 EXPORT void *createEngine()

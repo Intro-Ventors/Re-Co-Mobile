@@ -14,4 +14,4 @@ add_library(graphics_engine
              src/engine.cpp)
 
 # Set the additional includes.
-include_directories(graphics_engine PUBLIC "${CMAKE_CURRENT_LIST_DIR}/third_party/GraphicsCore/Include")
+include_directories(graphics_engine PUBLIC "${CMAKE_CURRENT_LIST_DIR}/third_party/Firefly/Include")
