@@ -1,0 +1,3 @@
+[submodule "reality_core/graphics_engine/third_party/GraphicsCore"]
+	path = reality_core/graphics_engine/third_party/GraphicsCore
+	url = https://github.com/Intro-Ventors/GraphicsCore

@@ -1,9 +1,17 @@
-cmake_minimum_required(VERSION 3.10.2)  # for example
+# Set the minimum required CMake version.
+cmake_minimum_required(VERSION 3.10.2)
 
+# Specify the C++ standard
+set(CMAKE_CXX_STANDARD 17)
+
+# Add the library.
 add_library(graphics_engine
 
              # Sets the library as a shared library.
              SHARED
 
              # Provides a relative path to your source file(s).
-             src/test.cpp)
+             src/engine.cpp)
+
+# Set the additional includes.
+include_directories(graphics_engine PUBLIC "${CMAKE_CURRENT_LIST_DIR}/third_party/GraphicsCore/Include")
