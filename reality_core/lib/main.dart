@@ -10,7 +10,6 @@ import 'package:page_transition/page_transition.dart';
 void testVulkanBackend() {
   final engine = Engine(1280, 720);
   engine.getRenderData();
-  engine.getVertexShaderInfo();
   engine.destroy();
 }
 
