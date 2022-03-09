@@ -2,12 +2,9 @@
 #include "export.hpp"
 
 #include <iostream>
-#include <cassert>
 
 #include "shader_code.hpp"
 #include "vert_spv.h"
-
-#include <Firefly/Shader.hpp>
 
 Engine::Engine()
 {
@@ -21,9 +18,7 @@ Engine::Engine()
 	m_pRenderedImage = Firefly::Image::create(m_pGraphicsEngine, {1280, 720, 1}, VkFormat::VK_FORMAT_B8G8R8A8_SRGB, Firefly::ImageType::TwoDimension);
 
 	// Shader test.
-	{
-		auto pShader = Firefly::Shader::create(m_pGraphicsEngine, ToShaderCode(vert_spv), VkShaderStageFlagBits::VK_SHADER_STAGE_VERTEX_BIT);
-	}
+	m_pVertexShader = Firefly::Shader::create(m_pGraphicsEngine, ToShaderCode(vert_spv), VkShaderStageFlagBits::VK_SHADER_STAGE_VERTEX_BIT);
 }
 
 std::shared_ptr<Firefly::Buffer> Engine::copyToBuffer()
@@ -61,6 +56,21 @@ EXPORT ImageData getImageData(void *pointer)
 	data.mPixelSize = pImage->getPixelSize();
 
 	return data;
+}
+
+EXPORT ShaderInfo getVertexShaderInfo(void *pointer)
+{
+	auto pEngine = static_cast<Engine *>(pointer);
+	const auto pShader = pEngine->getVertexShader();
+
+	ShaderInfo info = {};
+	info.m_BindingCount = pShader->getBindings().size();
+	info.m_InputAttributeCount = pShader->getInputAttributes().size();
+	info.m_pInputAttributes = pShader->getInputAttributes().data();
+	info.m_OutputAttributeCount = pShader->getOutputAttributes().size();
+	info.m_pOutputAttributes = pShader->getOutputAttributes().data();
+
+	return info;
 }
 
 EXPORT void destroyEngine(void *pointer)
