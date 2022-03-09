@@ -2,20 +2,14 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:reality_core/Graphics/engine_bindings/engine.dart';
-//import 'package:vulkan_backend/vulkan_backend.dart';
 import 'package:reality_core/screens/auth/signIn.dart';
 import 'package:page_transition/page_transition.dart';
 
 /// Function to test the Vulkan Backend.
 /// This is not permanent and is there just for debugging.
 void testVulkanBackend() {
-  //Instance instance = Instance(true);
-  //final device = instance.createDevice();
-
-  //device.destroy();
-  //instance.destroy();
-
   final engine = Engine();
+  engine.getRenderData();
   engine.destroy();
 }
 
