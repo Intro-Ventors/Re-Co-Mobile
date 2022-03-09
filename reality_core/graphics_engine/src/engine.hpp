@@ -2,7 +2,7 @@
 
 #include <Firefly/Instance.hpp>
 #include <Firefly/Graphics/GraphicsEngine.hpp>
-#include <Firefly/Image.hpp>
+#include <Firefly/Graphics/RenderTarget.hpp>
 #include <Firefly/Buffer.hpp>
 #include <Firefly/Shader.hpp>
 
@@ -14,6 +14,7 @@ class Engine
 	std::shared_ptr<Firefly::Instance> m_pInstance = nullptr;
 	std::shared_ptr<Firefly::GraphicsEngine> m_pGraphicsEngine = nullptr;
 	std::shared_ptr<Firefly::Image> m_pRenderedImage = nullptr;
+	std::shared_ptr<Firefly::RenderTarget> m_pRenderTarget = nullptr;
 	std::shared_ptr<Firefly::Buffer> m_pRenderedImageBuffer = nullptr;
 	std::shared_ptr<Firefly::Shader> m_pVertexShader = nullptr;
 
@@ -21,8 +22,10 @@ public:
 	/**
 	 * @brief Construct a new Engine object.
 	 *
+	 * @param width The render target width.
+	 * @param height The render target height.
 	 */
-	Engine();
+	Engine(uint32_t width, uint32_t height);
 
 	/**
 	 * @brief Copy The rendered image to a buffer and return it.
@@ -36,7 +39,7 @@ public:
 	 *
 	 * @return std::shared_ptr<Firefly::Image> Containing the data.
 	 */
-	std::shared_ptr<Firefly::Image> getRenderedImage() const { return m_pRenderedImage; }
+	std::shared_ptr<Firefly::Image> getRenderedImage() const { return m_pRenderTarget->getColorAttachment(); }
 
 	/**
 	 * @brief Get the Vertex Shader object.
@@ -59,20 +62,5 @@ extern "C"
 		uint64_t m_Height = 0;
 		uint64_t m_Depth = 0;
 		uint64_t mPixelSize = 0;
-	};
-
-	/**
-	 * Shader info structure.
-	 * This structure contains information about a single shader.
-	 */
-	struct ShaderInfo
-	{
-		Firefly::ShaderBinding *m_pBindings = nullptr;
-		Firefly::ShaderAttribute *m_pInputAttributes = nullptr;
-		Firefly::ShaderAttribute *m_pOutputAttributes = nullptr;
-
-		uint64_t m_BindingCount = 0;
-		uint64_t m_InputAttributeCount = 0;
-		uint64_t m_OutputAttributeCount = 0;
 	};
 }

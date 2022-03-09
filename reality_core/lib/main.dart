@@ -8,7 +8,7 @@ import 'package:page_transition/page_transition.dart';
 /// Function to test the Vulkan Backend.
 /// This is not permanent and is there just for debugging.
 void testVulkanBackend() {
-  final engine = Engine();
+  final engine = Engine(1280, 720);
   engine.getRenderData();
   engine.getVertexShaderInfo();
   engine.destroy();

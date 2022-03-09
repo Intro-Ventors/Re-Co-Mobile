@@ -6,7 +6,7 @@
 #include "shader_code.hpp"
 #include "vert_spv.h"
 
-Engine::Engine()
+Engine::Engine(uint32_t width, uint32_t height)
 {
 	// Create the Vulkan instance.
 	m_pInstance = Firefly::Instance::create(false, VK_API_VERSION_1_1);
@@ -14,8 +14,8 @@ Engine::Engine()
 	// Create the graphics engine.
 	m_pGraphicsEngine = Firefly::GraphicsEngine::create(m_pInstance);
 
-	// Image Test.
-	m_pRenderedImage = Firefly::Image::create(m_pGraphicsEngine, {1280, 720, 1}, VkFormat::VK_FORMAT_B8G8R8A8_SRGB, Firefly::ImageType::TwoDimension);
+	// Create the render target.
+	m_pRenderTarget = Firefly::RenderTarget::create(m_pGraphicsEngine, {width, height, 1});
 
 	// Shader test.
 	m_pVertexShader = Firefly::Shader::create(m_pGraphicsEngine, ToShaderCode(vert_spv), VkShaderStageFlagBits::VK_SHADER_STAGE_VERTEX_BIT);
@@ -23,15 +23,15 @@ Engine::Engine()
 
 std::shared_ptr<Firefly::Buffer> Engine::copyToBuffer()
 {
-	m_pRenderedImageBuffer = m_pRenderedImage->toBuffer();
+	m_pRenderedImageBuffer = getRenderedImage()->toBuffer();
 	return m_pRenderedImageBuffer;
 }
 
-EXPORT void *createEngine()
+EXPORT void *createEngine(uint32_t width, uint32_t height)
 {
 	try
 	{
-		auto pInstance = new Engine();
+		auto pInstance = new Engine(width, height);
 		return pInstance;
 	}
 	catch (const Firefly::BackendError &e)
@@ -56,21 +56,6 @@ EXPORT ImageData getImageData(void *pointer)
 	data.mPixelSize = pImage->getPixelSize();
 
 	return data;
-}
-
-EXPORT ShaderInfo getVertexShaderInfo(void *pointer)
-{
-	auto pEngine = static_cast<Engine *>(pointer);
-	const auto pShader = pEngine->getVertexShader();
-
-	ShaderInfo info = {};
-	info.m_BindingCount = pShader->getBindings().size();
-	info.m_InputAttributeCount = pShader->getInputAttributes().size();
-	info.m_pInputAttributes = pShader->getInputAttributes().data();
-	info.m_OutputAttributeCount = pShader->getOutputAttributes().size();
-	info.m_pOutputAttributes = pShader->getOutputAttributes().data();
-
-	return info;
 }
 
 EXPORT void destroyEngine(void *pointer)
