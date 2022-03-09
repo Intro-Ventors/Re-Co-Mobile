@@ -1,0 +1,18 @@
+{
+	"files.associations": {
+		"filesystem": "cpp",
+		"vector": "cpp",
+		"array": "cpp",
+		"chrono": "cpp",
+		"format": "cpp",
+		"forward_list": "cpp",
+		"initializer_list": "cpp",
+		"list": "cpp",
+		"span": "cpp",
+		"xhash": "cpp",
+		"xstring": "cpp",
+		"xtree": "cpp",
+		"xutility": "cpp",
+		"*.spv": "cpp"
+	}
+}

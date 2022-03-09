@@ -4,8 +4,10 @@
 #include <iostream>
 #include <cassert>
 
-#include <Firefly/Buffer.hpp>
-#include <Firefly/Image.hpp>
+#include "shader_code.hpp"
+#include "vert_spv.h"
+
+#include <Firefly/Shader.hpp>
 
 Engine::Engine()
 {
@@ -17,6 +19,11 @@ Engine::Engine()
 
 	// Image Test.
 	m_pRenderedImage = Firefly::Image::create(m_pGraphicsEngine, {1280, 720, 1}, VkFormat::VK_FORMAT_B8G8R8A8_SRGB, Firefly::ImageType::TwoDimension);
+
+	// Shader test.
+	{
+		auto pShader = Firefly::Shader::create(m_pGraphicsEngine, ToShaderCode(vert_spv), VkShaderStageFlagBits::VK_SHADER_STAGE_VERTEX_BIT);
+	}
 }
 
 std::shared_ptr<Firefly::Buffer> Engine::copyToBuffer()

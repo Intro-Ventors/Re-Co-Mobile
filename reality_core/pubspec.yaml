@@ -72,6 +72,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
    - assets/images/logo_icon.png
+   - assets/shaders/vert.spv
   # - android/lib/arm64-v8a/libVkLayer_khronos_validation.so
   # - android/lib/armeabi-v7a/libVkLayer_khronos_validation.so
   # - android/lib/x86/libVkLayer_khronos_validation.so
