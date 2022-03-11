@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'dart:io';
 
+import 'package:ffi/ffi.dart';
 import 'package:flutter/widgets.dart';
 
 class ImageData extends Struct {
@@ -21,12 +22,13 @@ class Engine {
   late DynamicLibrary mEngine;
   late Pointer<Void> pInstance;
 
-  late Pointer<Void> Function(int, int) _createEngine;
+  late Pointer<Void> Function(int, int, Pointer<Utf8>) _createEngine;
   late ImageData Function(Pointer<Void>) _getImageData;
   late void Function(Pointer<Void>) _destroyEngine;
 
-  /// Construct the engine using the render target's [width] and [height].
-  Engine(int width, int height) {
+  /// Construct the engine using the render target's [width], [height] and the
+  /// [baseAssetPath].
+  Engine(int width, int height, String baseAssetPath) {
     // Try and load the engine library.
     mEngine = Platform.isAndroid
         ? DynamicLibrary.open('libgraphics_engine.so')
@@ -34,8 +36,10 @@ class Engine {
 
     // Load the functions.
     _createEngine = mEngine
-        .lookup<NativeFunction<Pointer<Void> Function(Uint32, Uint32)>>(
-            'createEngine')
+        .lookup<
+            NativeFunction<
+                Pointer<Void> Function(
+                    Uint32, Uint32, Pointer<Utf8>)>>('createEngine')
         .asFunction();
 
     _destroyEngine = mEngine
@@ -48,7 +52,7 @@ class Engine {
         .asFunction();
 
     // Create the instance.
-    pInstance = _createEngine(width, height);
+    pInstance = _createEngine(width, height, baseAssetPath.toNativeUtf8());
   }
 
   /// Get the rendered image from the backend.

@@ -9,5 +9,4 @@
  *
  */
 
-#define FIREFLY_SETUP_THIRD_PARTY
-#include "Firefly/Imports.hpp"
+#include <Firefly/ImportSourceFiles.hpp>

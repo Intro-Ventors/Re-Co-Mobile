@@ -7,7 +7,16 @@ layout(location = 2) in vec2 inTexture;
 
 layout(location = 0) out vec2 outTexture;
 
+layout(set = 0, binding = 0) uniform Camera {
+    mat4 view;
+    mat4 proj;
+} cam;
+
+layout(set = 0, binding = 1) uniform Model {
+    mat4 model;
+} model;
+
 void main() {
 	outTexture = inTexture;
-    gl_Position = vec4(inPos, 1.0f);
+    gl_Position = cam.proj * cam.view * model.model * vec4(inPos, 1.0f);
 }
