@@ -1,14 +1,25 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:reality_core/Graphics/engine_bindings/engine.dart';
 import 'package:reality_core/screens/auth/signIn.dart';
 import 'package:page_transition/page_transition.dart';
 
+Future<String> loadAsset() async {
+  return await rootBundle.loadString('assets/shaders/shader.frag.spv');
+}
+
+extension E on String {
+  String lastChars(int n) => substring(length - n);
+}
+
 /// Function to test the Vulkan Backend.
 /// This is not permanent and is there just for debugging.
-void testVulkanBackend() {
-  final engine = Engine(1280, 720);
+void testVulkanBackend() async {
+  String templatePath = await loadAsset();
+  final engine =
+      Engine(1280, 720, templatePath.lastChars("/template.txt".length));
   engine.getRenderData();
   engine.destroy();
 }

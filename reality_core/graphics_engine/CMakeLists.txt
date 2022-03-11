@@ -19,3 +19,5 @@ add_library(graphics_engine
 
 # Set the additional includes.
 include_directories(graphics_engine PUBLIC "${CMAKE_CURRENT_LIST_DIR}/third_party/Firefly/Include")
+
+add_definitions(-DGLM_FORCE_CXX17)

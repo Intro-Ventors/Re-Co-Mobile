@@ -8,6 +8,7 @@
 
 #include "shader_code.hpp"
 #include "vert_spv.h"
+#include "frag_spv.h"
 
 Engine::Engine(uint32_t width, uint32_t height, const std::string &assetPath)
 	: m_Camera(Firefly::StereoCamera(glm::vec3(0.0f), (width / 2.0f) / height)), m_BasePath(assetPath)
@@ -16,8 +17,8 @@ Engine::Engine(uint32_t width, uint32_t height, const std::string &assetPath)
 	m_GraphicsEngine = Firefly::GraphicsEngine::create(m_Instance);
 	m_RenderTarget = Firefly::RenderTarget::create(m_GraphicsEngine, {width, height, 1}, VkFormat::VK_FORMAT_B8G8R8A8_SRGB, 1);
 
-	m_VertexShader = Firefly::Shader::create(m_GraphicsEngine, m_BasePath + "Shaders/shader.vert.spv", VkShaderStageFlagBits::VK_SHADER_STAGE_VERTEX_BIT);
-	m_FragmentShader = Firefly::Shader::create(m_GraphicsEngine, m_BasePath + "Shaders/shader.frag.spv", VkShaderStageFlagBits::VK_SHADER_STAGE_FRAGMENT_BIT);
+	m_VertexShader = Firefly::Shader::create(m_GraphicsEngine, ToShaderCode(vert_spv), VkShaderStageFlagBits::VK_SHADER_STAGE_VERTEX_BIT);
+	m_FragmentShader = Firefly::Shader::create(m_GraphicsEngine, ToShaderCode(frag_spv), VkShaderStageFlagBits::VK_SHADER_STAGE_FRAGMENT_BIT);
 
 	m_Pipeline = Firefly::GraphicsPipeline::create(m_GraphicsEngine, "Basic_Pipeline", {m_VertexShader, m_FragmentShader}, m_RenderTarget);
 	m_VertexResourcePackageLeft = m_Pipeline->createPackage(m_VertexShader.get());
@@ -25,7 +26,7 @@ Engine::Engine(uint32_t width, uint32_t height, const std::string &assetPath)
 	m_FragmentResourcePackage = m_Pipeline->createPackage(m_FragmentShader.get());
 
 	{
-		auto model = Firefly::LoadObjModel(m_GraphicsEngine, m_BasePath + "Assets/VikingRoom/untitled.obj");
+		auto model = Firefly::LoadObjModel(m_GraphicsEngine, m_BasePath + "viking_room/untitled.obj");
 
 		m_VertexBuffer = model.m_VertexBuffer;
 		m_VertexCount = static_cast<uint32_t>(model.m_VertexCount);
@@ -47,7 +48,7 @@ Engine::Engine(uint32_t width, uint32_t height, const std::string &assetPath)
 	m_VertexResourcePackageRight->bindResources(0, {m_RightEyeUniform});
 	m_VertexResourcePackageRight->bindResources(1, {m_UniformBuffer});
 
-	m_Texture = Firefly::LoadImage(m_GraphicsEngine, m_BasePath + "Assets/VikingRoom/texture.png");
+	m_Texture = Firefly::LoadImage(m_GraphicsEngine, m_BasePath + "viking_room/texture.png");
 	m_FragmentResourcePackage->bindResources(0, {m_Texture});
 }
 
