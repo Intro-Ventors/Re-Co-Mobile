@@ -43,6 +43,7 @@ dependencies:
   qr_code_scanner: ^0.7.0
   ffi: ^1.1.1
   sliding_up_panel: ^2.0.0+1
+  image_picker: ^0.8.4+10
   vulkan_backend: 
     git: https://github.com/Intro-Ventors/vulkan_backend
 

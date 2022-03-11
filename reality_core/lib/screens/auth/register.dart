@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:reality_core/models/user.dart';
+import 'package:reality_core/screens/auth/select_profile_pic.dart';
 import 'package:reality_core/screens/home/home.dart';
 import 'package:reality_core/themes/loading.dart';
 
@@ -199,7 +200,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
             // passing this to our root
-            Navigator.of(context).pop();
+            // Navigator.of(context).pop();
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ProfilePicPage()),
+            );
           },
         ),
       ),
