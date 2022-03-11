@@ -1,0 +1,3 @@
+class receving{
+  String  = receving()
+}
