@@ -39,7 +39,7 @@ class Engine {
   late void Function(Pointer<Void>) _destroyEngine;
 
   /// Construct the engine using the render target's [width], [height] and the
-  /// [baseAssetPath].
+  /// input image's [bytes].
   Engine(int width, int height, ByteData bytes) {
     // Try and load the engine library.
     mEngine = Platform.isAndroid
@@ -62,7 +62,6 @@ class Engine {
             'getImageData')
         .asFunction();
 
-    mCamera = Camera(mEngine, pInstance);
     final buffer = calloc<Uint8>(bytes.lengthInBytes);
     for (var i = 0; i < bytes.lengthInBytes; i++) {
       buffer.elementAt(i).value = bytes.getUint8(i);
@@ -71,6 +70,9 @@ class Engine {
     pInstance =
         _createEngineWithImage(width, height, buffer, bytes.lengthInBytes);
     calloc.free(buffer);
+
+    // Create the camera.
+    mCamera = Camera(mEngine, pInstance);
   }
 
   /// Get the camera of the engine.
