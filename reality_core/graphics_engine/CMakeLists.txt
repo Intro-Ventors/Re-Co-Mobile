@@ -14,6 +14,7 @@ add_library(graphics_engine
 
              # Provides a relative path to your source file(s).
              src/engine.cpp
+             src/export.cpp
              src/firefly_compile.cpp
 			 )
 
@@ -21,3 +22,5 @@ add_library(graphics_engine
 include_directories(graphics_engine PUBLIC "${CMAKE_CURRENT_LIST_DIR}/third_party/Firefly/Include")
 
 add_definitions(-DGLM_FORCE_CXX17)
+find_library(ANDROID_LOG_LIB log)
+target_link_libraries(graphics_engine ${ANDROID_LOG_LIB})
