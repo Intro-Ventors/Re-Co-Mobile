@@ -53,6 +53,57 @@ EXPORT ImageData getImageData(void *pointer)
 
 EXPORT void destroyEngine(void *pointer)
 {
-	auto pEngine = static_cast<Engine *>(pointer);
-	delete pEngine;
+	delete static_cast<Engine *>(pointer);
+}
+
+// Camera manipulation functions.
+
+EXPORT void moveCameraForward(void *pointer, const uint64_t delta)
+{
+	static_cast<Engine *>(pointer)->getCamera().moveForward(delta);
+}
+
+EXPORT void moveCameraBackward(void *pointer, const uint64_t delta)
+{
+	static_cast<Engine *>(pointer)->getCamera().moveBackward(delta);
+}
+
+EXPORT void moveCameraLeft(void *pointer, const uint64_t delta)
+{
+	static_cast<Engine *>(pointer)->getCamera().moveLeft(delta);
+}
+
+EXPORT void moveCameraRight(void *pointer, const uint64_t delta)
+{
+	static_cast<Engine *>(pointer)->getCamera().moveRight(delta);
+}
+
+EXPORT void moveCameraUp(void *pointer, const uint64_t delta)
+{
+	static_cast<Engine *>(pointer)->getCamera().moveUp(delta);
+}
+
+EXPORT void moveCameraDown(void *pointer, const uint64_t delta)
+{
+	static_cast<Engine *>(pointer)->getCamera().moveDown(delta);
+}
+
+EXPORT void rotateCameraLeft(void *pointer, const uint64_t delta)
+{
+	static_cast<Engine *>(pointer)->getCamera().rotateLeft(delta);
+}
+
+EXPORT void rotateCameraRight(void *pointer, const uint64_t delta)
+{
+	static_cast<Engine *>(pointer)->getCamera().rotateRight(delta);
+}
+
+EXPORT void rotateCameraUp(void *pointer, const uint64_t delta)
+{
+	static_cast<Engine *>(pointer)->getCamera().rotateUp(delta);
+}
+
+EXPORT void rotateCameraDown(void *pointer, const uint64_t delta)
+{
+	static_cast<Engine *>(pointer)->getCamera().rotateDown(delta);
 }

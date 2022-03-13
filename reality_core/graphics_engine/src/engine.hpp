@@ -104,6 +104,13 @@ public:
 	 */
 	std::shared_ptr<Firefly::Image> getColorImage() const { return m_RenderTarget->getColorAttachment(); }
 
+	/**
+	 * @brief Get the Camera object.
+	 * 
+	 * @return Firefly::StereoCamera& 
+	 */
+	Firefly::StereoCamera& getCamera() { return m_Camera; }
+
 private:
 	void loadVikingRoomModel();
 	void loadQuad();

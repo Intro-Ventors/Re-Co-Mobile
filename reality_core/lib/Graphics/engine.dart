@@ -40,8 +40,7 @@ class Engine {
 
   /// Construct the engine using the render target's [width], [height] and the
   /// [baseAssetPath].
-  Engine(int width, int height, ByteData bytes)
-      : mCamera = Camera(Vector3.zero(), (width / 2) / height) {
+  Engine(int width, int height, ByteData bytes) {
     // Try and load the engine library.
     mEngine = Platform.isAndroid
         ? DynamicLibrary.open('libgraphics_engine.so')
@@ -63,6 +62,7 @@ class Engine {
             'getImageData')
         .asFunction();
 
+    mCamera = Camera(mEngine, pInstance);
     final buffer = calloc<Uint8>(bytes.lengthInBytes);
     for (var i = 0; i < bytes.lengthInBytes; i++) {
       buffer.elementAt(i).value = bytes.getUint8(i);
@@ -73,10 +73,13 @@ class Engine {
     calloc.free(buffer);
   }
 
+  /// Get the camera of the engine.
+  Camera getCamera() {
+    return mCamera;
+  }
+
   /// Get the rendered image from the backend.
   Image getRenderData() {
-    mCamera.update();
-
     final data = _getImageData(pInstance);
     return Image.memory(data.pImageData.asTypedList(
         data.mWidth * data.mHeight * data.mDepth * data.mBitsPerPixel));

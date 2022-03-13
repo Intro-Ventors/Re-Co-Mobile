@@ -1,68 +1,118 @@
-import 'dart:math';
-
-import 'package:vector_math/vector_math.dart';
-
-class EyeMatrix {
-  Matrix4 mViewMatrix = Matrix4.identity();
-  Matrix4 mProjectionMatrix = Matrix4.identity();
-}
+import 'dart:ffi';
 
 class Camera {
-  EyeMatrix mLeftEye;
-  EyeMatrix mRightEye;
+  late void Function(Pointer<Void>, int) _moveForward;
+  late void Function(Pointer<Void>, int) _moveBackward;
+  late void Function(Pointer<Void>, int) _moveLeft;
+  late void Function(Pointer<Void>, int) _moveRight;
+  late void Function(Pointer<Void>, int) _moveUp;
+  late void Function(Pointer<Void>, int) _moveDown;
+  late void Function(Pointer<Void>, int) _rotateLeft;
+  late void Function(Pointer<Void>, int) _rotateRight;
+  late void Function(Pointer<Void>, int) _rotateUp;
+  late void Function(Pointer<Void>, int) _rotateDown;
+  final Pointer<Void> pInstance;
 
-  late Vector3 mPosition;
-  late Vector3 mFront = Vector3(0.0, 0.0, -1.0);
-  late Vector3 mRight = Vector3(1.0, 0.0, 0.0);
-  late Vector3 mUp = Vector3(0.0, 1.0, 0.0);
-  late Vector3 mWorldUp = Vector3(0.0, 1.0, 0.0);
+  /// Construct the camera using an [engine] and an [instance].
+  Camera(DynamicLibrary engine, Pointer<Void> instance) : pInstance = instance {
+    _moveForward = engine
+        .lookup<NativeFunction<Void Function(Pointer<Void>, Uint64)>>(
+            'moveCameraForward')
+        .asFunction();
 
-  late double mEyeSeparation = 0.008;
-  late double mFieldOfView = 90.0;
-  late double mAspectRatio = 0;
-  late double mFarPlane = 256.0;
-  late double mNearPlane = 0.001;
-  late double mYaw = 90.0;
-  late double mPitch = 0;
-  late double mFocalLength = 0.5;
+    _moveBackward = engine
+        .lookup<NativeFunction<Void Function(Pointer<Void>, Uint64)>>(
+            'moveCameraBackward')
+        .asFunction();
 
-  Camera(Vector3 position, double aspectRatio)
-      : mLeftEye = EyeMatrix(),
-        mRightEye = EyeMatrix(),
-        mPosition = position,
-        mAspectRatio = aspectRatio;
+    _moveLeft = engine
+        .lookup<NativeFunction<Void Function(Pointer<Void>, Uint64)>>(
+            'moveCameraLeft')
+        .asFunction();
 
-  void update() {
-    var wd2 = mNearPlane * tan(radians(mFieldOfView / 2.0));
-    var ndfl = mNearPlane / mFocalLength;
-    var left, right;
-    var top = wd2;
-    var bottom = -wd2;
+    _moveRight = engine
+        .lookup<NativeFunction<Void Function(Pointer<Void>, Uint64)>>(
+            'moveCameraRight')
+        .asFunction();
 
-    var front = Vector3.zero();
-    front.x = cos(radians(mYaw)) * cos(radians(mPitch));
-    front.y = sin(radians(mPitch));
-    front.z = sin(radians(mYaw)) * cos(radians(mPitch));
-    mFront = front.normalized(); // normalize
-    mRight = mFront.cross(mWorldUp);
-    mUp = mRight.cross(mFront).normalized(); // normalize
+    _moveUp = engine
+        .lookup<NativeFunction<Void Function(Pointer<Void>, Uint64)>>(
+            'moveCameraUp')
+        .asFunction();
 
-    // Left eye
-    left = -mAspectRatio * wd2 + 0.5 * mEyeSeparation * ndfl;
-    right = mAspectRatio * wd2 + 0.5 * mEyeSeparation * ndfl;
+    _moveDown = engine
+        .lookup<NativeFunction<Void Function(Pointer<Void>, Uint64)>>(
+            'moveCameraDown')
+        .asFunction();
 
-    setFrustumMatrix(mLeftEye.mProjectionMatrix, left, right, bottom, top,
-        mNearPlane, mFarPlane);
-    mLeftEye.mViewMatrix =
-        Matrix4.translation(mPosition - mRight * (mEyeSeparation / 2.0));
+    _rotateLeft = engine
+        .lookup<NativeFunction<Void Function(Pointer<Void>, Uint64)>>(
+            'rotateCameraLeft')
+        .asFunction();
 
-    // Right eye
-    left = -mAspectRatio * wd2 - 0.5 * mEyeSeparation * ndfl;
-    right = mAspectRatio * wd2 - 0.5 * mEyeSeparation * ndfl;
+    _rotateRight = engine
+        .lookup<NativeFunction<Void Function(Pointer<Void>, Uint64)>>(
+            'rotateCameraRight')
+        .asFunction();
 
-    setFrustumMatrix(mRightEye.mProjectionMatrix, left, right, bottom, top,
-        mNearPlane, mFarPlane);
-    mRightEye.mViewMatrix =
-        Matrix4.translation(mPosition + mRight * (mEyeSeparation / 2.0));
+    _rotateUp = engine
+        .lookup<NativeFunction<Void Function(Pointer<Void>, Uint64)>>(
+            'rotateCameraUp')
+        .asFunction();
+
+    _rotateDown = engine
+        .lookup<NativeFunction<Void Function(Pointer<Void>, Uint64)>>(
+            'rotateCameraDown')
+        .asFunction();
+  }
+
+  /// Move the camera forward.
+  void moveForward(int delta) {
+    _moveForward(pInstance, delta);
+  }
+
+  /// Move the camera backward.
+  void moveBackward(int delta) {
+    _moveBackward(pInstance, delta);
+  }
+
+  /// Move the camera to the left.
+  void moveLeft(int delta) {
+    _moveLeft(pInstance, delta);
+  }
+
+  /// Move the camera to the right.
+  void moveRight(int delta) {
+    _moveRight(pInstance, delta);
+  }
+
+  /// Move the camera up.
+  void moveUp(int delta) {
+    _moveUp(pInstance, delta);
+  }
+
+  /// Move the camera down.
+  void moveDown(int delta) {
+    _moveDown(pInstance, delta);
+  }
+
+  /// Rotate the camera to the left.
+  void rotateLeft(int delta) {
+    _rotateLeft(pInstance, delta);
+  }
+
+  /// Rotate the camera to the right.
+  void rotateRight(int delta) {
+    _rotateRight(pInstance, delta);
+  }
+
+  /// Rotate the camera up.
+  void rotateUp(int delta) {
+    _rotateUp(pInstance, delta);
+  }
+
+  /// Rotate the camera down.
+  void rotateDown(int delta) {
+    _rotateDown(pInstance, delta);
   }
 }
