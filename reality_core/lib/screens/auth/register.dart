@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:reality_core/models/user.dart';
-import 'package:reality_core/screens/auth/select_profile_pic.dart';
 import 'package:reality_core/screens/home/home.dart';
 import 'package:reality_core/themes/loading.dart';
 
@@ -191,6 +190,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           )),
     );
 
+    // Returning widget tree for register page
+
     return Scaffold(
       backgroundColor: Colors.blue[900],
       appBar: AppBar(
@@ -200,11 +201,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
             // passing this to our root
-            // Navigator.of(context).pop();
-            Navigator.push(
+            Navigator.of(context).pop();
+            /* Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const ProfilePicPage()),
-            );
+            ); */
           },
         ),
       ),
@@ -265,6 +266,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   //registering new user
+
   void signUp(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       try {

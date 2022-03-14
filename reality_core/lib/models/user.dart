@@ -4,6 +4,7 @@ class UserModel {
   String? firstName;
   String? secondName;
   String? picURL;
+  // bool isDarkMode = false;
 
   UserModel(
       {this.uid, this.email, this.firstName, this.secondName, this.picURL});

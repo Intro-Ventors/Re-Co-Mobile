@@ -27,6 +27,7 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 apply plugin: 'com.google.gms.google-services'
 
 android {
+    ndkVersion '21.1.6352462'
     compileSdkVersion flutter.compileSdkVersion
 
     compileOptions {
@@ -40,6 +41,7 @@ android {
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
+		debug.jniLibs.srcDirs += 'libs'
     }
 
     defaultConfig {
