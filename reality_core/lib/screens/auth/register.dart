@@ -190,6 +190,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           )),
     );
 
+    // Returning widget tree for register page
+
     return Scaffold(
       backgroundColor: Colors.blue[900],
       appBar: AppBar(
@@ -200,6 +202,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           onPressed: () {
             // passing this to our root
             Navigator.of(context).pop();
+            /* Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ProfilePicPage()),
+            ); */
           },
         ),
       ),
@@ -260,6 +266,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   //registering new user
+
   void signUp(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       try {

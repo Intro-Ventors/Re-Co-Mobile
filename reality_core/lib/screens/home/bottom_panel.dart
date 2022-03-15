@@ -5,6 +5,8 @@ import 'package:reality_core/models/user.dart';
 import 'package:reality_core/screens/home/edit_profile.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
+import '../../themes/build_appBar.dart';
+
 class PanelWidget extends StatefulWidget {
   final ScrollController controller;
   final PanelController panelController;
@@ -34,21 +36,25 @@ class _PanelWidgetState extends State<PanelWidget> {
   }
 
   @override
-  Widget build(BuildContext context) => ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          const SizedBox(
-            height: 12,
-          ),
-          buildDragHandle(),
-          const SizedBox(
-            height: 36,
-          ),
-          buildAboutText(),
-          const SizedBox(
-            height: 36,
-          ),
-        ],
+  Widget build(BuildContext context) => Scaffold(
+        appBar: buildAppBar(context),
+        body: ListView(
+          physics: const BouncingScrollPhysics(),
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            const SizedBox(
+              height: 12,
+            ),
+            buildDragHandle(),
+            const SizedBox(
+              height: 36,
+            ),
+            buildAboutText(),
+            const SizedBox(
+              height: 36,
+            ),
+          ],
+        ),
       );
 
   Widget buildDragHandle() => GestureDetector(
@@ -72,7 +78,7 @@ class _PanelWidgetState extends State<PanelWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-                "Welcome Back ${loggedInUser.firstName}${loggedInUser.secondName}",
+                "Welcome Back ${loggedInUser.firstName} ${loggedInUser.secondName}",
                 style: const TextStyle(
                     color: Colors.black54,
                     fontWeight: FontWeight.bold,
