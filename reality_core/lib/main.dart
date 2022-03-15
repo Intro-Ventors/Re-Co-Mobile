@@ -27,7 +27,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   try {
-    // testVulkanBackend(); // JUST FOR DEBUGGING!
+    testVulkanBackend(); // JUST FOR DEBUGGING!
     // [Dhiraj] I removed the graphics engine for a bit, because there is a tiny
     // issue with the queues and stuff so until I debug it, I cant commit that
     // part. Everything else seems to be working fine and I got the validation

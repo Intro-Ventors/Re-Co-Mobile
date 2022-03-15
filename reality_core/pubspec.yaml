@@ -43,9 +43,6 @@ dependencies:
   qr_code_scanner: ^0.7.0
   ffi: ^1.1.1
   sliding_up_panel: ^2.0.0+1
-  vector_math: ^2.1.1
-  vulkan_backend: 
-    git: https://github.com/Intro-Ventors/vulkan_backend
 
 dev_dependencies:
   flutter_test:
