@@ -24,3 +24,4 @@ include_directories(graphics_engine PUBLIC "${CMAKE_CURRENT_LIST_DIR}/third_part
 add_definitions(-DGLM_FORCE_CXX17)
 find_library(ANDROID_LOG_LIB log)
 target_link_libraries(graphics_engine ${ANDROID_LOG_LIB})
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=undefined,address")
