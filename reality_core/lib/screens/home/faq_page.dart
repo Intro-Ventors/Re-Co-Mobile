@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:reality_core/models/faq_model.dart';
+import 'package:reality_core/themes/cardView.dart';
 
 class FaqPage extends StatefulWidget {
   const FaqPage({Key? key}) : super(key: key);
@@ -27,7 +29,7 @@ class _FaqPageState extends State<FaqPage> {
           child: ListView.builder(
               itemCount: _faqList.length,
               itemBuilder: (context, index) {
-                return Text("${index}");
+                return QuestionCard(_faqList[index] as Question);
               })),
     );
   }
