@@ -8,10 +8,10 @@ EXPORT void *createEngine(uint32_t width, uint32_t height, const unsigned char *
 
 EXPORT ImageData getImageDataWithCameraInputs(
 	void *pointer,
-	const unsigned char *pLeftEyeProjection,
-	const unsigned char *pLeftEyeView,
-	const unsigned char *pRightEyeProjection,
-	const unsigned char *pRightEyeView)
+	const uint8_t *pLeftEyeProjection,
+	const uint8_t *pLeftEyeView,
+	const uint8_t *pRightEyeProjection,
+	const uint8_t *pRightEyeView)
 {
 	RawCameraData cameraData;
 	cameraData.m_pLeftEyeProjection = pLeftEyeProjection;

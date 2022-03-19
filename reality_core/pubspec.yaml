@@ -44,6 +44,7 @@ dependencies:
   ffi: ^1.1.1
   sliding_up_panel: ^2.0.0+1
   image_picker: ^0.8.4+10
+  flutter_webrtc: ^0.8.3
 
 dev_dependencies:
   flutter_test:
