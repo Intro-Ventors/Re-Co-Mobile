@@ -20,7 +20,7 @@ constexpr bool EnableDebugging = false;
 
 #endif
 
-static void Logger(const Firefly::Utility::LogLevel level, const std::string_view &message)
+static void Logger(Firefly::Utility::LogLevel level, const std::string_view &message)
 {
 	switch (level)
 	{
@@ -49,10 +49,10 @@ Engine::Engine(uint32_t width, uint32_t height, const unsigned char *pImageData,
 	: m_Camera(Firefly::StereoCamera(glm::vec3(0.0f), (width / 2.0f) / height))
 {
 	__android_log_print(ANDROID_LOG_INFO, "Engine", "Setting the logger method.");
-	Firefly::Utility::SetLoggerMethod(Logger);
+	Firefly::Utility::Logger::setLoggerMethod(Logger);
 
 	// Create the instance.
-	__android_log_print(ANDROID_LOG_INFO, "Engine", "Attempting to creat the instance.");
+	__android_log_print(ANDROID_LOG_INFO, "Engine", "Attempting to create the instance.");
 	m_Instance = Firefly::Instance::create(true, VK_API_VERSION_1_1);
 	assert(m_Instance && "Failed to create the instance!");
 	__android_log_print(ANDROID_LOG_INFO, "Engine", "Instance created.");
