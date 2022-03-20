@@ -121,7 +121,7 @@ class _PanelWidgetState extends State<PanelWidget> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => SettingsUI()),
+                    MaterialPageRoute(builder: (context) => EditProfile()),
                   );
                 },
                 child: const Text('Edit Profile'))
