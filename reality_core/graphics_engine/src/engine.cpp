@@ -12,14 +12,6 @@
 
 #include <android/log.h>
 
-#if defined(_DEBUG) || defined(NDEBUG)
-constexpr bool EnableDebugging = true;
-
-#else
-constexpr bool EnableDebugging = false;
-
-#endif
-
 static void Logger(Firefly::Utility::LogLevel level, const std::string_view &message)
 {
 	switch (level)
@@ -53,7 +45,7 @@ Engine::Engine(uint32_t width, uint32_t height, const unsigned char *pImageData,
 
 	// Create the instance.
 	__android_log_print(ANDROID_LOG_INFO, "Engine", "Attempting to create the instance.");
-	m_Instance = Firefly::Instance::create(true, VK_API_VERSION_1_1);
+	m_Instance = Firefly::Instance::create(false);
 	assert(m_Instance && "Failed to create the instance!");
 	__android_log_print(ANDROID_LOG_INFO, "Engine", "Instance created.");
 
@@ -124,20 +116,16 @@ std::shared_ptr<Firefly::Buffer> Engine::drawScene()
 
 	const auto pCommandBuffer = m_RenderTarget->setupFrame(Firefly::CreateClearValues(Firefly::CreateColor256(0), Firefly::CreateColor256(0), Firefly::CreateColor256(0)));
 
-	// Left eye.
-	m_VertexBuffer->bindAsVertexBuffer(pCommandBuffer);
-	m_IndexBuffer->bindAsIndexBuffer(pCommandBuffer);
-	m_Pipeline->bind(pCommandBuffer, {m_VertexResourcePackageLeft.get(), m_FragmentResourcePackage.get()});
+	pCommandBuffer->bindVertexBuffer(m_VertexBuffer.get());
+	pCommandBuffer->bindIndexBuffer(m_IndexBuffer.get());
+	pCommandBuffer->bindGraphicsPipeline(m_Pipeline.get(), { m_VertexResourcePackageLeft.get(), m_FragmentResourcePackage.get() });
 
+	// Left eye. 
 	pCommandBuffer->bindScissor(scissor);
 	pCommandBuffer->bindViewport(viewport);
 	pCommandBuffer->drawIndices(m_IndexCount);
 
 	// Right eye.
-	m_VertexBuffer->bindAsVertexBuffer(pCommandBuffer);
-	m_IndexBuffer->bindAsIndexBuffer(pCommandBuffer);
-	m_Pipeline->bind(pCommandBuffer, {m_VertexResourcePackageRight.get(), m_FragmentResourcePackage.get()});
-
 	viewport.x = viewport.width;
 	pCommandBuffer->bindViewport(viewport);
 	pCommandBuffer->bindScissor(scissor);
@@ -191,20 +179,16 @@ std::shared_ptr<Firefly::Buffer> Engine::drawScene(RawCameraData cameraData)
 
 	const auto pCommandBuffer = m_RenderTarget->setupFrame(Firefly::CreateClearValues(Firefly::CreateColor256(0), Firefly::CreateColor256(0), Firefly::CreateColor256(0)));
 
-	// Left eye.
-	m_VertexBuffer->bindAsVertexBuffer(pCommandBuffer);
-	m_IndexBuffer->bindAsIndexBuffer(pCommandBuffer);
-	m_Pipeline->bind(pCommandBuffer, {m_VertexResourcePackageLeft.get(), m_FragmentResourcePackage.get()});
+	pCommandBuffer->bindVertexBuffer(m_VertexBuffer.get());
+	pCommandBuffer->bindIndexBuffer(m_IndexBuffer.get());
+	pCommandBuffer->bindGraphicsPipeline(m_Pipeline.get(), { m_VertexResourcePackageLeft.get(), m_FragmentResourcePackage.get() });
 
+	// Left eye. 
 	pCommandBuffer->bindScissor(scissor);
 	pCommandBuffer->bindViewport(viewport);
 	pCommandBuffer->drawIndices(m_IndexCount);
 
 	// Right eye.
-	m_VertexBuffer->bindAsVertexBuffer(pCommandBuffer);
-	m_IndexBuffer->bindAsIndexBuffer(pCommandBuffer);
-	m_Pipeline->bind(pCommandBuffer, {m_VertexResourcePackageRight.get(), m_FragmentResourcePackage.get()});
-
 	viewport.x = viewport.width;
 	pCommandBuffer->bindViewport(viewport);
 	pCommandBuffer->bindScissor(scissor);
