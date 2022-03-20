@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:reality_core/Graphics/engine.dart';
 import 'package:reality_core/screens/auth/auth.dart';
 import 'package:reality_core/screens/auth/signIn.dart';
-import 'package:page_transition/page_transition.dart';
 
 Future<ByteData> loadAsset(String asset) async {
   return await rootBundle.load(asset);
@@ -46,20 +45,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Re-Co',
-      theme: ThemeData(
-        primarySwatch: Colors.cyan,
-      ),
-      debugShowCheckedModeBanner: false,
-      home: AnimatedSplashScreen(
-        splash: 'assets/images/logo_icon.png',
-        nextScreen: const AuthTree(),
-        splashTransition: SplashTransition.scaleTransition,
-        pageTransitionType: PageTransitionType.fade,
-        splashIconSize: 200,
-        duration: 3000,
-        backgroundColor: Colors.cyan,
-      ),
-    );
+        title: 'Re-Co',
+        theme: ThemeData(
+          primarySwatch: Colors.cyan,
+        ),
+        debugShowCheckedModeBanner: false,
+        home: const AuthTree());
   }
 }
