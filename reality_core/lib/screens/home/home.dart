@@ -1,6 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:reality_core/models/user.dart';
 import 'package:reality_core/screens/home/bottom_panel.dart';
 import 'package:reality_core/screens/home/qr_code_scanner.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -16,20 +14,6 @@ class Home extends StatefulWidget {
 
 class HomeScreenState extends State<Home> {
   final panelController = PanelController();
-  User? user = FirebaseAuth.instance.currentUser;
-  UserModel loggedInUser = UserModel();
-
-  @override
-  void initState() {
-    super.initState();
-    onRefresh(FirebaseAuth.instance.currentUser);
-  }
-
-  onRefresh(userCred) {
-    setState(() {
-      user = userCred;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {

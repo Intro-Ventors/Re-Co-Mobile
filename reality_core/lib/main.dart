@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:reality_core/Graphics/engine.dart';
+import 'package:reality_core/screens/auth/auth.dart';
 import 'package:reality_core/screens/auth/signIn.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -52,7 +53,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: AnimatedSplashScreen(
         splash: 'assets/images/logo_icon.png',
-        nextScreen: const LoginScreen(),
+        nextScreen: const AuthTree(),
         splashTransition: SplashTransition.scaleTransition,
         pageTransitionType: PageTransitionType.fade,
         splashIconSize: 200,
