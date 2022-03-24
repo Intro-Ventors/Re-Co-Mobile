@@ -41,7 +41,7 @@ android {
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
-		debug.jniLibs.srcDirs += 'sanitizer'
+		//debug.jniLibs.srcDirs += 'sanitizer'
 		//debug.jniLibs.srcDirs += 'validation_layers'
     }
 

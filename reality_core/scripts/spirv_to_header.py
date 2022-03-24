@@ -26,10 +26,9 @@ with open(shader_source, 'rb') as source, open(output_header, 'w+') as header:
 
     header.write("#pragma once\n")
     header.write("\n")
-    header.write("#include <vector>\n")
     header.write("#include <cstdint>\n")
     header.write("\n")
-    header.write(f"inline std::vector<uint8_t> {variable_name} = \n")
+    header.write(f"constexpr uint8_t {variable_name}[] = \n")
     header.write("{\n")
     header.write(spirv_data)
     header.write("\n};")
