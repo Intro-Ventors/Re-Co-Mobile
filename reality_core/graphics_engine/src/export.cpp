@@ -1,7 +1,7 @@
 #include "export.hpp"
 #include "engine.hpp"
 
-EXPORT void *createEngine(uint32_t width, uint32_t height, const unsigned char *pImageData, const uint64_t size)
+EXPORT void *createEngine(uint32_t width, uint32_t height, const uint8_t *pImageData, const uint64_t size)
 {
 	return new Engine(width, height, pImageData, size);
 }

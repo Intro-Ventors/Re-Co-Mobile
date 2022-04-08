@@ -41,7 +41,8 @@ android {
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
-		debug.jniLibs.srcDirs += 'libs'
+		debug.jniLibs.srcDirs += 'sanitizer'
+		//debug.jniLibs.srcDirs += 'validation_layers'
     }
 
     defaultConfig {
@@ -64,10 +65,11 @@ android {
 	externalNativeBuild {
     	// Encapsulates your CMake build configurations.
     	cmake {
-    	  // Provides a relative path to your CMake build script.
-    	  path "../../graphics_engine/CMakeLists.txt"
+    	  	// Provides a relative path to your CMake build script.
+    	  	path "../../graphics_engine/CMakeLists.txt"
+		  	//arguments '-DSANITIZE'
     	}
-  }
+  	}
 }
 
 flutter {

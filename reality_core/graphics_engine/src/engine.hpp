@@ -29,10 +29,10 @@ extern "C"
 	 */
 	struct RawCameraData
 	{
-		const unsigned char *m_pLeftEyeProjection = nullptr;
-		const unsigned char *m_pLeftEyeView = nullptr;
-		const unsigned char *m_pRightEyeProjection = nullptr;
-		const unsigned char *m_pRightEyeView = nullptr;
+		const uint8_t *m_pLeftEyeProjection = nullptr;
+		const uint8_t *m_pLeftEyeView = nullptr;
+		const uint8_t *m_pRightEyeProjection = nullptr;
+		const uint8_t *m_pRightEyeView = nullptr;
 	};
 }
 

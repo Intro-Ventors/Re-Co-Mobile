@@ -6,7 +6,7 @@ import 'package:reality_core/models/user.dart';
 import 'package:reality_core/screens/home/home.dart';
 import 'package:reality_core/screens/home/settings.dart';
 
-class SettingsUI extends StatelessWidget {
+class EditProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -270,6 +270,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         "secondName": sNameUpdateText.text,
                         "email": emailUpdateText.text
                       });
+                      Fluttertoast.showToast(msg: "Profile Details Updated!");
                     },
                     color: Colors.cyan,
                     padding: const EdgeInsets.symmetric(horizontal: 50),

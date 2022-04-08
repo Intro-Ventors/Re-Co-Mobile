@@ -1,6 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:reality_core/screens/auth/signIn.dart';
+import 'package:reality_core/screens/home/bottom_panel.dart';
+import 'package:reality_core/screens/home/edit_profile.dart';
+import 'package:reality_core/screens/home/faq_page.dart';
+import 'package:reality_core/screens/home/memories.dart';
 import 'package:reality_core/screens/home/settings.dart';
 
 class DarwerMenu extends StatelessWidget {
@@ -67,22 +71,6 @@ class DarwerMenu extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => SettingsPage()));
               },
             ),
-            ListTile(
-              leading: Icon(Icons.info_outline,
-                  size: _drawerIconSize, color: Theme.of(context).accentColor),
-              title: Text(
-                'About',
-                style: TextStyle(
-                    fontSize: _drawerFontSize,
-                    color: Theme.of(context).accentColor),
-              ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SettingsPage()),
-                );
-              },
-            ),
             Divider(
               color: Theme.of(context).primaryColor,
               height: 1,
@@ -99,7 +87,7 @@ class DarwerMenu extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SettingsPage()),
+                  MaterialPageRoute(builder: (context) => const FaqPage()),
                 );
               },
             ),
@@ -122,7 +110,7 @@ class DarwerMenu extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SettingsPage()),
+                  MaterialPageRoute(builder: (context) => EditProfile()),
                 );
               },
             ),
@@ -145,7 +133,7 @@ class DarwerMenu extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SettingsPage()),
+                  MaterialPageRoute(builder: (context) => const Memories()),
                 );
               },
             ),

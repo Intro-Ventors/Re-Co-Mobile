@@ -12,14 +12,6 @@
 
 #include <android/log.h>
 
-#if defined(_DEBUG) || defined(NDEBUG)
-constexpr bool EnableDebugging = true;
-
-#else
-constexpr bool EnableDebugging = false;
-
-#endif
-
 static void Logger(Firefly::Utility::LogLevel level, const std::string_view &message)
 {
 	switch (level)
@@ -48,24 +40,19 @@ static void Logger(Firefly::Utility::LogLevel level, const std::string_view &mes
 Engine::Engine(uint32_t width, uint32_t height, const unsigned char *pImageData, const uint64_t size)
 	: m_Camera(Firefly::StereoCamera(glm::vec3(0.0f), (width / 2.0f) / height))
 {
-	__android_log_print(ANDROID_LOG_INFO, "Engine", "Setting the logger method.");
 	Firefly::Utility::Logger::setLoggerMethod(Logger);
 
 	// Create the instance.
-	__android_log_print(ANDROID_LOG_INFO, "Engine", "Attempting to create the instance.");
-	m_Instance = Firefly::Instance::create(true, VK_API_VERSION_1_1);
+	m_Instance = Firefly::Instance::create(0, false);
 	assert(m_Instance && "Failed to create the instance!");
-	__android_log_print(ANDROID_LOG_INFO, "Engine", "Instance created.");
 
 	// Create the engine.
 	m_GraphicsEngine = Firefly::GraphicsEngine::create(m_Instance);
 	assert(m_GraphicsEngine && "Failed to create the graphics engine!");
-	__android_log_print(ANDROID_LOG_INFO, "Engine", "Graphics engine created.");
 
 	// Create the render target.
 	m_RenderTarget = Firefly::RenderTarget::create(m_GraphicsEngine, {width, height, 1}, VkFormat::VK_FORMAT_R8G8B8A8_SRGB, 1);
 	assert(m_RenderTarget && "Failed to create the render target!");
-	__android_log_print(ANDROID_LOG_INFO, "Engine", "Render target created.");
 
 	m_VertexShader = Firefly::Shader::create(m_GraphicsEngine, ToShaderCode(vert_spv), VkShaderStageFlagBits::VK_SHADER_STAGE_VERTEX_BIT);
 	assert(m_VertexShader && "Failed to create the vertex shader!");
@@ -79,8 +66,10 @@ Engine::Engine(uint32_t width, uint32_t height, const unsigned char *pImageData,
 	// Create and check if we created the packages correctly.
 	m_VertexResourcePackageLeft = m_Pipeline->createPackage(m_VertexShader.get());
 	assert(m_VertexResourcePackageLeft && "Failed to create the vertex resource package left!");
+
 	m_VertexResourcePackageRight = m_Pipeline->createPackage(m_VertexShader.get());
 	assert(m_VertexResourcePackageRight && "Failed to create the vertex resource package right!");
+
 	m_FragmentResourcePackage = m_Pipeline->createPackage(m_FragmentShader.get());
 	assert(m_FragmentResourcePackage && "Failed to create the fragment resource package!");
 
@@ -124,20 +113,16 @@ std::shared_ptr<Firefly::Buffer> Engine::drawScene()
 
 	const auto pCommandBuffer = m_RenderTarget->setupFrame(Firefly::CreateClearValues(Firefly::CreateColor256(0), Firefly::CreateColor256(0), Firefly::CreateColor256(0)));
 
-	// Left eye.
-	m_VertexBuffer->bindAsVertexBuffer(pCommandBuffer);
-	m_IndexBuffer->bindAsIndexBuffer(pCommandBuffer);
-	m_Pipeline->bind(pCommandBuffer, {m_VertexResourcePackageLeft.get(), m_FragmentResourcePackage.get()});
+	pCommandBuffer->bindVertexBuffer(m_VertexBuffer.get());
+	pCommandBuffer->bindIndexBuffer(m_IndexBuffer.get());
+	pCommandBuffer->bindGraphicsPipeline(m_Pipeline.get(), {m_VertexResourcePackageLeft.get(), m_FragmentResourcePackage.get()});
 
+	// Left eye.
 	pCommandBuffer->bindScissor(scissor);
 	pCommandBuffer->bindViewport(viewport);
 	pCommandBuffer->drawIndices(m_IndexCount);
 
 	// Right eye.
-	m_VertexBuffer->bindAsVertexBuffer(pCommandBuffer);
-	m_IndexBuffer->bindAsIndexBuffer(pCommandBuffer);
-	m_Pipeline->bind(pCommandBuffer, {m_VertexResourcePackageRight.get(), m_FragmentResourcePackage.get()});
-
 	viewport.x = viewport.width;
 	pCommandBuffer->bindViewport(viewport);
 	pCommandBuffer->bindScissor(scissor);
@@ -156,23 +141,21 @@ std::shared_ptr<Firefly::Buffer> Engine::drawScene(RawCameraData cameraData)
 
 	// Copy the camera data.
 	{
-		{
-			auto pDataPointer = m_LeftEyeUniform->mapMemory();
-			std::copy(cameraData.m_pLeftEyeProjection, cameraData.m_pLeftEyeProjection + sizeof(glm::mat4), reinterpret_cast<unsigned char *>(pDataPointer));
-			pDataPointer += sizeof(glm::mat4);
+		auto pDataPointer = m_LeftEyeUniform->mapMemory();
+		std::copy(cameraData.m_pLeftEyeProjection, cameraData.m_pLeftEyeProjection + sizeof(glm::mat4), reinterpret_cast<unsigned char *>(pDataPointer));
+		pDataPointer += sizeof(glm::mat4);
 
-			std::copy(cameraData.m_pLeftEyeView, cameraData.m_pLeftEyeView + sizeof(glm::mat4), reinterpret_cast<unsigned char *>(pDataPointer));
-			m_LeftEyeUniform->unmapMemory();
-		}
+		std::copy(cameraData.m_pLeftEyeView, cameraData.m_pLeftEyeView + sizeof(glm::mat4), reinterpret_cast<unsigned char *>(pDataPointer));
+		m_LeftEyeUniform->unmapMemory();
+	}
 
-		{
-			auto pDataPointer = m_RightEyeUniform->mapMemory();
-			std::copy(cameraData.m_pRightEyeProjection, cameraData.m_pRightEyeProjection + sizeof(glm::mat4), reinterpret_cast<unsigned char *>(pDataPointer));
-			pDataPointer += sizeof(glm::mat4);
+	{
+		auto pDataPointer = m_RightEyeUniform->mapMemory();
+		std::copy(cameraData.m_pRightEyeProjection, cameraData.m_pRightEyeProjection + sizeof(glm::mat4), reinterpret_cast<unsigned char *>(pDataPointer));
+		pDataPointer += sizeof(glm::mat4);
 
-			std::copy(cameraData.m_pRightEyeView, cameraData.m_pRightEyeView + sizeof(glm::mat4), reinterpret_cast<unsigned char *>(pDataPointer));
-			m_RightEyeUniform->unmapMemory();
-		}
+		std::copy(cameraData.m_pRightEyeView, cameraData.m_pRightEyeView + sizeof(glm::mat4), reinterpret_cast<unsigned char *>(pDataPointer));
+		m_RightEyeUniform->unmapMemory();
 	}
 
 	VkViewport viewport = {};
@@ -191,20 +174,16 @@ std::shared_ptr<Firefly::Buffer> Engine::drawScene(RawCameraData cameraData)
 
 	const auto pCommandBuffer = m_RenderTarget->setupFrame(Firefly::CreateClearValues(Firefly::CreateColor256(0), Firefly::CreateColor256(0), Firefly::CreateColor256(0)));
 
-	// Left eye.
-	m_VertexBuffer->bindAsVertexBuffer(pCommandBuffer);
-	m_IndexBuffer->bindAsIndexBuffer(pCommandBuffer);
-	m_Pipeline->bind(pCommandBuffer, {m_VertexResourcePackageLeft.get(), m_FragmentResourcePackage.get()});
+	pCommandBuffer->bindVertexBuffer(m_VertexBuffer.get());
+	pCommandBuffer->bindIndexBuffer(m_IndexBuffer.get());
+	pCommandBuffer->bindGraphicsPipeline(m_Pipeline.get(), {m_VertexResourcePackageLeft.get(), m_FragmentResourcePackage.get()});
 
+	// Left eye.
 	pCommandBuffer->bindScissor(scissor);
 	pCommandBuffer->bindViewport(viewport);
 	pCommandBuffer->drawIndices(m_IndexCount);
 
 	// Right eye.
-	m_VertexBuffer->bindAsVertexBuffer(pCommandBuffer);
-	m_IndexBuffer->bindAsIndexBuffer(pCommandBuffer);
-	m_Pipeline->bind(pCommandBuffer, {m_VertexResourcePackageRight.get(), m_FragmentResourcePackage.get()});
-
 	viewport.x = viewport.width;
 	pCommandBuffer->bindViewport(viewport);
 	pCommandBuffer->bindScissor(scissor);

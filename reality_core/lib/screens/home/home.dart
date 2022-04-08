@@ -54,8 +54,8 @@ class HomeScreenState extends State<Home> {
                 SizedBox(
                   height: 250,
                   child: Container(
-                    height: 200.0,
-                    width: 200.0,
+                    height: 180.0,
+                    width: 180.0,
                     child: FittedBox(
                       child: FloatingActionButton(
                         onPressed: () {

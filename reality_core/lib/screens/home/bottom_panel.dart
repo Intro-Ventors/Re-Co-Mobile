@@ -121,7 +121,7 @@ class _PanelWidgetState extends State<PanelWidget> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => SettingsUI()),
+                    MaterialPageRoute(builder: (context) => EditProfile()),
                   );
                 },
                 child: const Text('Edit Profile'))
@@ -133,6 +133,10 @@ class _PanelWidgetState extends State<PanelWidget> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 35.0),
       child: TextField(
+        enableInteractiveSelection: false,
+        onTap: () {
+          FocusScope.of(context).requestFocus(new FocusNode());
+        },
         decoration: InputDecoration(
             contentPadding: const EdgeInsets.only(bottom: 3),
             labelText: labelText,
