@@ -1,4 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:reality_core/models/user.dart';
 import 'package:reality_core/screens/home/home.dart';
 import 'package:reality_core/screens/home/settings.dart';
 
@@ -7,7 +11,7 @@ class SettingsUI extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "Setting UI",
+      title: "Settings",
       home: EditProfilePage(),
     );
   }
@@ -19,9 +23,119 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
   bool showPassword = false;
+
+  final fNameUpdateText = new TextEditingController();
+  final sNameUpdateText = new TextEditingController();
+  final emailUpdateText = new TextEditingController();
+
+  final _auth = FirebaseAuth.instance;
+
+  /*  @override
+  void dispose() {
+    fNameUpdateText.dispose();
+    sNameUpdateText.dispose();
+    emailUpdateText.dispose();
+    super.dispose();
+  } */
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      this.loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final fNameTextFeild = TextFormField(
+        autofocus: false,
+        controller: fNameUpdateText,
+        keyboardType: TextInputType.name,
+        validator: (value) {
+          RegExp regex = new RegExp(r'^.{3,}$');
+          if (value!.isEmpty) {
+            return ("First Name cannot be Empty");
+          }
+          if (!regex.hasMatch(value)) {
+            return ("Enter Valid name(Min. 3 Character)");
+          }
+          return null;
+        },
+        onSaved: (value) {
+          fNameUpdateText.text = value!;
+        },
+        textInputAction: TextInputAction.next,
+        decoration: InputDecoration(
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+          hintText: "${loggedInUser.firstName}",
+          hintStyle:
+              const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ));
+
+    final sNameTextFeild = TextFormField(
+        autofocus: false,
+        controller: sNameUpdateText,
+        keyboardType: TextInputType.name,
+        validator: (value) {
+          if (value!.isEmpty) {
+            return ("Second Name cannot be Empty");
+          }
+          return null;
+        },
+        onSaved: (value) {
+          sNameUpdateText.text = value!;
+        },
+        textInputAction: TextInputAction.next,
+        decoration: InputDecoration(
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+          hintText: "${loggedInUser.secondName}",
+          hintStyle:
+              const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ));
+
+    final emailTextFeild = TextFormField(
+        autofocus: false,
+        controller: emailUpdateText,
+        keyboardType: TextInputType.emailAddress,
+        validator: (value) {
+          if (value!.isEmpty) {
+            return ("Please Enter Your Email");
+          }
+          // reg expression for email validation
+          if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+              .hasMatch(value)) {
+            return ("Please Enter a valid email");
+          }
+          return null;
+        },
+        onSaved: (value) {
+          emailUpdateText.text = value!;
+        },
+        decoration: InputDecoration(
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+          hintText: "${loggedInUser.email}",
+          hintStyle:
+              const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ));
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -113,11 +227,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
               const SizedBox(
                 height: 35,
               ),
-              buildTextField("First Name", "Kanishka", false),
-              buildTextField("Last Name", "Gaveen", false),
-              buildTextField("E-mail", "kgaveen@fmail.com", false),
-              buildTextField("Password", "********", true),
-              //buildTextField("Location", "cmb, Sri Lanka", false),
+              fNameTextFeild,
+              const SizedBox(height: 20),
+              sNameTextFeild,
+              const SizedBox(height: 20),
+              emailTextFeild,
               const SizedBox(
                 height: 30,
               ),
@@ -140,7 +254,22 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   ),
                   RaisedButton(
                     onPressed: () {
-                      //updde details of user in the firestore
+                      final docUser = FirebaseFirestore.instance
+                          .collection("users")
+                          .doc(loggedInUser.uid);
+
+                      if (sNameUpdateText.text.isEmpty) {
+                        sNameUpdateText.text = "${loggedInUser.secondName}";
+                      }
+                      if (emailUpdateText.text.isEmpty) {
+                        emailUpdateText.text = "${loggedInUser.email}";
+                      }
+
+                      docUser.update({
+                        "firstName": fNameUpdateText.text,
+                        "secondName": sNameUpdateText.text,
+                        "email": emailUpdateText.text
+                      });
                     },
                     color: Colors.cyan,
                     padding: const EdgeInsets.symmetric(horizontal: 50),
@@ -160,39 +289,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget buildTextField(
-      String labelText, String placeholder, bool isPasswordTextField) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 35.0),
-      child: TextField(
-        obscureText: isPasswordTextField ? showPassword : false,
-        decoration: InputDecoration(
-            suffixIcon: isPasswordTextField
-                ? IconButton(
-                    onPressed: () {
-                      setState(() {
-                        showPassword = !showPassword;
-                      });
-                    },
-                    icon: const Icon(
-                      Icons.remove_red_eye,
-                      color: Colors.grey,
-                    ),
-                  )
-                : null,
-            contentPadding: const EdgeInsets.only(bottom: 3),
-            labelText: labelText,
-            floatingLabelBehavior: FloatingLabelBehavior.always,
-            hintText: placeholder,
-            hintStyle: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Colors.blueGrey,
-            )),
       ),
     );
   }

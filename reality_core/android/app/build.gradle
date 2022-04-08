@@ -27,6 +27,7 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 apply plugin: 'com.google.gms.google-services'
 
 android {
+    ndkVersion '21.1.6352462'
     compileSdkVersion flutter.compileSdkVersion
 
     compileOptions {
@@ -40,6 +41,7 @@ android {
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
+		debug.jniLibs.srcDirs += 'libs'
     }
 
     defaultConfig {
@@ -58,6 +60,14 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+
+	externalNativeBuild {
+    	// Encapsulates your CMake build configurations.
+    	cmake {
+    	  // Provides a relative path to your CMake build script.
+    	  path "../../graphics_engine/CMakeLists.txt"
+    	}
+  }
 }
 
 flutter {

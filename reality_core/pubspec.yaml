@@ -43,9 +43,8 @@ dependencies:
   qr_code_scanner: ^0.7.0
   ffi: ^1.1.1
   sliding_up_panel: ^2.0.0+1
-  vulkan_backend: 
-    git: https://github.com/Intro-Ventors/vulkan_backend
-    
+  image_picker: ^0.8.4+10
+  flutter_webrtc: ^0.8.3
 
 dev_dependencies:
   flutter_test:
@@ -73,6 +72,11 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
    - assets/images/logo_icon.png
+   - assets/shaders/shader.vert.spv
+   - assets/shaders/shader.frag.spv
+   - assets/viking_room/texture.png
+   - assets/viking_room/untitled.obj
+   - assets/template.txt
   # - android/lib/arm64-v8a/libVkLayer_khronos_validation.so
   # - android/lib/armeabi-v7a/libVkLayer_khronos_validation.so
   # - android/lib/x86/libVkLayer_khronos_validation.so
