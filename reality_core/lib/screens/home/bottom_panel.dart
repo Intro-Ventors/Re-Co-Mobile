@@ -29,7 +29,7 @@ class _PanelWidgetState extends State<PanelWidget> {
         .doc(user!.uid)
         .get()
         .then((value) {
-      this.loggedInUser = UserModel.fromMap(value.data());
+      loggedInUser = UserModel.fromSnap(value);
       setState(() {});
     });
   }
@@ -81,31 +81,16 @@ class _PanelWidgetState extends State<PanelWidget> {
                     color: Colors.black54,
                     fontWeight: FontWeight.bold,
                     fontSize: 20)),
+            const SizedBox(
+              height: 35,
+            ),
             Center(
-              child: Stack(
-                children: [
-                  Container(
-                    width: 130,
-                    height: 130,
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                            width: 4,
-                            color: Theme.of(context).scaffoldBackgroundColor),
-                        boxShadow: [
-                          BoxShadow(
-                              spreadRadius: 2,
-                              blurRadius: 10,
-                              color: Colors.black.withOpacity(0.1),
-                              offset: Offset(0, 10))
-                        ],
-                        shape: BoxShape.circle,
-                        image: const DecorationImage(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(
-                              "https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8cHJvZmlsZXxlbnwwfHwwfHw%3D&w=1000&q=80",
-                            ))),
-                  ),
-                ],
+              child: CircleAvatar(
+                backgroundColor: Colors.grey,
+                backgroundImage: NetworkImage(
+                  "${loggedInUser.profilePic}",
+                ),
+                radius: 60,
               ),
             ),
             const SizedBox(
@@ -121,7 +106,7 @@ class _PanelWidgetState extends State<PanelWidget> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => EditProfile()),
+                    MaterialPageRoute(builder: (context) => EditProfilePage()),
                   );
                 },
                 child: const Text('Edit Profile'))

@@ -23,6 +23,7 @@ class _FaqPageState extends State<FaqPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.cyan,
         title: const Text("FAQ"),
       ),
       body: SafeArea(

@@ -1,4 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:reality_core/models/user.dart';
+import 'package:reality_core/screens/auth/utils.dart';
 import 'package:reality_core/screens/home/bottom_panel.dart';
 import 'package:reality_core/screens/home/qr_code_scanner.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -19,6 +23,7 @@ class HomeScreenState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.cyan,
         title: const Text(
           "Home Page",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),

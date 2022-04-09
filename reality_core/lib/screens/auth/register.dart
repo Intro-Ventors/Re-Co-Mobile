@@ -1,12 +1,13 @@
 // ignore_for_file: deprecated_member_use
+import 'dart:typed_data';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:reality_core/models/user.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:reality_core/screens/auth/signIn.dart';
+import 'package:reality_core/screens/auth/utils.dart';
 import 'package:reality_core/screens/home/home.dart';
-import 'package:reality_core/themes/loading.dart';
+import 'auth_methods.dart';
+import 'package:reality_core/themes/text_field_input.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({Key? key}) : super(key: key);
@@ -16,317 +17,222 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  final _auth = FirebaseAuth.instance;
-
-  // string for displaying the error Message
-  String? errorMessage;
-
-  // our form key
-  final _formKey = GlobalKey<FormState>();
   // editing Controller
-  final firstNameEditingController = new TextEditingController();
-  final secondNameEditingController = new TextEditingController();
-  final emailEditingController = new TextEditingController();
-  final passwordEditingController = new TextEditingController();
-  final confirmPasswordEditingController = new TextEditingController();
+  final TextEditingController firstNameEditingController =
+      TextEditingController();
+  final TextEditingController secondNameEditingController =
+      TextEditingController();
+  final TextEditingController emailEditingController = TextEditingController();
+  final TextEditingController passwordEditingController =
+      TextEditingController();
+  final TextEditingController confirmPasswordEditingController =
+      TextEditingController();
+  bool _isLoading = false;
+
+  Uint8List? _image;
 
   @override
-  Widget build(BuildContext context) {
-    //first name field
-    final firstNameField = TextFormField(
-        autofocus: false,
-        controller: firstNameEditingController,
-        keyboardType: TextInputType.name,
-        validator: (value) {
-          RegExp regex = new RegExp(r'^.{3,}$');
-          if (value!.isEmpty) {
-            return ("First Name cannot be Empty");
-          }
-          if (!regex.hasMatch(value)) {
-            return ("Enter Valid name(Min. 3 Character)");
-          }
-          return null;
-        },
-        onSaved: (value) {
-          firstNameEditingController.text = value!;
-        },
-        textInputAction: TextInputAction.next,
-        decoration: InputDecoration(
-          prefixIcon: const Icon(Icons.account_circle, color: Colors.white),
-          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "First Name",
-          hintStyle: const TextStyle(color: Colors.white),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ));
-
-    //second name field
-    final secondNameField = TextFormField(
-        autofocus: false,
-        controller: secondNameEditingController,
-        keyboardType: TextInputType.name,
-        validator: (value) {
-          if (value!.isEmpty) {
-            return ("Second Name cannot be Empty");
-          }
-          return null;
-        },
-        onSaved: (value) {
-          secondNameEditingController.text = value!;
-        },
-        textInputAction: TextInputAction.next,
-        decoration: InputDecoration(
-          prefixIcon: const Icon(Icons.account_circle, color: Colors.white),
-          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Second Name",
-          hintStyle: const TextStyle(color: Colors.white),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ));
-
-    //email field
-    final emailField = TextFormField(
-        autofocus: false,
-        controller: emailEditingController,
-        keyboardType: TextInputType.emailAddress,
-        validator: (value) {
-          if (value!.isEmpty) {
-            return ("Please Enter Your Email");
-          }
-          // reg expression for email validation
-          if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
-              .hasMatch(value)) {
-            return ("Please Enter a valid email");
-          }
-          return null;
-        },
-        onSaved: (value) {
-          emailEditingController.text = value!;
-        },
-        textInputAction: TextInputAction.next,
-        decoration: InputDecoration(
-          prefixIcon: const Icon(Icons.mail, color: Colors.white),
-          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Email",
-          hintStyle: const TextStyle(color: Colors.white),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ));
-
-    //password field
-    final passwordField = TextFormField(
-        autofocus: false,
-        controller: passwordEditingController,
-        obscureText: true,
-        validator: (value) {
-          RegExp regex = new RegExp(r'^.{6,}$');
-          if (value!.isEmpty) {
-            return ("Password is required for login");
-          }
-          if (!regex.hasMatch(value)) {
-            return ("Enter Valid Password(Min. 6 Character)");
-          }
-        },
-        onSaved: (value) {
-          firstNameEditingController.text = value!;
-        },
-        textInputAction: TextInputAction.next,
-        decoration: InputDecoration(
-          prefixIcon: const Icon(Icons.vpn_key, color: Colors.white),
-          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Password",
-          hintStyle: const TextStyle(color: Colors.white),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ));
-
-    //confirm password field
-    final confirmPasswordField = TextFormField(
-        autofocus: false,
-        controller: confirmPasswordEditingController,
-        obscureText: true,
-        validator: (value) {
-          if (confirmPasswordEditingController.text !=
-              passwordEditingController.text) {
-            return "Password don't match";
-          }
-          return null;
-        },
-        onSaved: (value) {
-          confirmPasswordEditingController.text = value!;
-        },
-        textInputAction: TextInputAction.done,
-        decoration: InputDecoration(
-          prefixIcon: const Icon(Icons.vpn_key, color: Colors.white),
-          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Confirm Password",
-          hintStyle: const TextStyle(color: Colors.white),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ));
-
-    //signup button
-    final signUpButton = Material(
-      elevation: 5,
-      borderRadius: BorderRadius.circular(30),
-      color: Colors.blueGrey,
-      child: MaterialButton(
-          padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-          minWidth: MediaQuery.of(context).size.width,
-          onPressed: () {
-            const LoadingAnimation(); //mot working
-            signUp(emailEditingController.text, passwordEditingController.text);
-          },
-          child: const Text(
-            "SignUp",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
-          )),
-    );
-
-    // Returning widget tree for register page
-
-    return Scaffold(
-      backgroundColor: Colors.blue[900],
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () {
-            // passing this to our root
-            Navigator.of(context).pop();
-            /* Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const ProfilePicPage()),
-            ); */
-          },
-        ),
-      ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Container(
-            color: Colors.blue[900],
-            child: Padding(
-              padding: const EdgeInsets.all(30.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    const Text(
-                      "New To Re-Co?",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30),
-                    ),
-                    SizedBox(
-                        height: 180,
-                        child: Image.asset(
-                          "assets/images/logo_icon.png",
-                          fit: BoxFit.contain,
-                        )),
-                    const SizedBox(height: 20),
-                    const Text(
-                      "Make an Account",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20),
-                    ),
-                    const SizedBox(height: 20),
-                    firstNameField,
-                    const SizedBox(height: 20),
-                    secondNameField,
-                    const SizedBox(height: 20),
-                    emailField,
-                    const SizedBox(height: 20),
-                    passwordField,
-                    const SizedBox(height: 20),
-                    confirmPasswordField,
-                    const SizedBox(height: 20),
-                    signUpButton,
-                    const SizedBox(height: 15),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
+  void dispose() {
+    super.dispose();
+    emailEditingController.dispose();
+    passwordEditingController.dispose();
+    firstNameEditingController.dispose();
+    secondNameEditingController.dispose();
+    confirmPasswordEditingController.dispose();
   }
 
-  //registering new user
+  void signUpUser() async {
+    // set loading to true
+    setState(() {
+      _isLoading = true;
+    });
 
-  void signUp(String email, String password) async {
-    if (_formKey.currentState!.validate()) {
-      try {
-        await _auth
-            .createUserWithEmailAndPassword(email: email, password: password)
-            .then((value) => {postDetailsToFirestore()})
-            .catchError((e) {
-          Fluttertoast.showToast(msg: e!.message);
-        });
-      } on FirebaseAuthException catch (error) {
-        switch (error.code) {
-          case "invalid-email":
-            errorMessage = "Your email address appears to be malformed.";
-            break;
-          case "wrong-password":
-            errorMessage = "Your password is wrong.";
-            break;
-          case "user-not-found":
-            errorMessage = "User with this email doesn't exist.";
-            break;
-          case "user-disabled":
-            errorMessage = "User with this email has been disabled.";
-            break;
-          case "too-many-requests":
-            errorMessage = "Too many requests";
-            break;
-          case "operation-not-allowed":
-            errorMessage = "Signing in with Email and Password is not enabled.";
-            break;
-          default:
-            errorMessage = "An undefined Error happened.";
-        }
-        Fluttertoast.showToast(msg: errorMessage!);
-      }
+    // signup user using our authmethodds
+    String res = await AuthMethods().signUpUser(
+        email: emailEditingController.text,
+        password: passwordEditingController.text,
+        firstName: firstNameEditingController.text,
+        secondName: secondNameEditingController.text,
+        file: _image!);
+    // if string returned is sucess, user has been created
+    if (res == "success") {
+      setState(() {
+        _isLoading = false;
+      });
+      // navigate to the home screen
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const Home(),
+        ),
+      );
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
+      // show the error
+      showSnackBar(context, res);
     }
   }
 
-  postDetailsToFirestore() async {
-    // calling our firestore
-    // calling our user model
-    // sedning these values
+  selectImage() async {
+    Uint8List im = await pickImage(ImageSource.gallery);
+    // set state because we need to display the image we selected on the circle avatar
+    setState(() {
+      _image = im;
+    });
+  }
 
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    User? user = _auth.currentUser;
-
-    UserModel userModel = UserModel();
-
-    // writing all the values
-    userModel.email = user!.email;
-    userModel.uid = user.uid;
-    userModel.firstName = firstNameEditingController.text;
-    userModel.secondName = secondNameEditingController.text;
-
-    await firebaseFirestore
-        .collection("users")
-        .doc(user.uid)
-        .set(userModel.toMap());
-    Fluttertoast.showToast(msg: "Account created successfully :) ");
-
-    Navigator.pushAndRemoveUntil((context),
-        MaterialPageRoute(builder: (context) => Home()), (route) => false);
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        elevation: 0.0,
+        backgroundColor: Colors.blue[900],
+      ),
+      backgroundColor: Colors.blue[900],
+      resizeToAvoidBottomInset: false,
+      body: SafeArea(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 25),
+          width: double.infinity,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Text(
+                "New To Re-Co?",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30),
+              ),
+              Flexible(
+                child: Container(),
+                flex: 2,
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              Stack(
+                children: [
+                  _image != null
+                      ? CircleAvatar(
+                          radius: 64,
+                          backgroundImage: MemoryImage(_image!),
+                          backgroundColor: Colors.red,
+                        )
+                      : const CircleAvatar(
+                          radius: 64,
+                          backgroundImage: NetworkImage(
+                              'https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8cHJvZmlsZXxlbnwwfHwwfHw%3D&w=1000&q=80'),
+                          backgroundColor: Colors.red,
+                        ),
+                  Positioned(
+                    bottom: -10,
+                    left: 80,
+                    child: IconButton(
+                      onPressed: selectImage,
+                      icon: const Icon(Icons.add_a_photo),
+                    ),
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              TextFieldInput(
+                hintText: 'Enter your First Name',
+                textInputType: TextInputType.text,
+                textEditingController: firstNameEditingController,
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              TextFieldInput(
+                hintText: 'Enter your Second Name',
+                textInputType: TextInputType.text,
+                textEditingController: secondNameEditingController,
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              TextFieldInput(
+                hintText: 'Enter your email',
+                textInputType: TextInputType.emailAddress,
+                textEditingController: emailEditingController,
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              TextFieldInput(
+                hintText: 'Enter your password',
+                textInputType: TextInputType.text,
+                textEditingController: passwordEditingController,
+                isPass: true,
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              InkWell(
+                child: Container(
+                  child: !_isLoading
+                      ? const Text(
+                          'Sign up',
+                        )
+                      : const CircularProgressIndicator(
+                          color: Colors.white,
+                        ),
+                  width: double.infinity,
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  decoration: const ShapeDecoration(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(4)),
+                    ),
+                    color: Colors.cyan,
+                  ),
+                ),
+                onTap: signUpUser,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    child: const Text(
+                      'Already have an account?',
+                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 2),
+                  ),
+                  GestureDetector(
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const LoginScreen(),
+                      ),
+                    ),
+                    child: Container(
+                      child: const Text(
+                        ' Login.',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 2),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

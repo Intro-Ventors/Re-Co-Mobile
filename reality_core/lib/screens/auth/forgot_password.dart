@@ -14,6 +14,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   final _auth = FirebaseAuth.instance;
   // string for displaying the error Message
   String? errorMessage;
+  bool _isLoading = false;
 
   // our form key
   final _formKey = GlobalKey<FormState>();
@@ -53,28 +54,32 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         ));
 
     //submit button
-    final sendEmailButton = Material(
-      elevation: 5,
-      borderRadius: BorderRadius.circular(30),
-      color: Colors.blueGrey,
-      child: MaterialButton(
-          padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-          minWidth: MediaQuery.of(context).size.width,
-          onPressed: () {
-            const LoadingAnimation(); //mot working
-            //now
-            _auth.sendPasswordResetEmail(email: emailEditingController.text);
-            Navigator.of(context).pop();
-            Fluttertoast.showToast(
-                msg: "We sent you an Email to reset your password",
-                toastLength: Toast.LENGTH_LONG);
-          },
-          child: const Text(
-            "SUBMIT",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
-          )),
+    final sendEmailButton = InkWell(
+      child: Container(
+        child: !_isLoading
+            ? const Text(
+                'Sign up',
+              )
+            : const CircularProgressIndicator(
+                color: Colors.white,
+              ),
+        width: double.infinity,
+        alignment: Alignment.center,
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        decoration: const ShapeDecoration(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(4)),
+          ),
+          color: Colors.cyan,
+        ),
+      ),
+      onTap: () {
+        _auth.sendPasswordResetEmail(email: emailEditingController.text);
+        Navigator.of(context).pop();
+        Fluttertoast.showToast(
+            msg: "We sent you an Email to reset your password",
+            toastLength: Toast.LENGTH_LONG);
+      },
     );
 
     return Scaffold(

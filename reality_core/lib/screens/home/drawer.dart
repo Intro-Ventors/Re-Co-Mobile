@@ -110,7 +110,7 @@ class DarwerMenu extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => EditProfile()),
+                  MaterialPageRoute(builder: (context) => EditProfilePage()),
                 );
               },
             ),
