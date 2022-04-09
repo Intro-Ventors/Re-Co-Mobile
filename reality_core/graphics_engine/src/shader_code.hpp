@@ -23,7 +23,7 @@ inline ShaderCode ToShaderCode(const std::vector<uint8_t> &bytes)
 }
 
 template <uint64_t Size>
-inline ShaderCode FromRawArrayToShaderCode(const unsigned char (&bytes)[Size])
+inline ShaderCode ToShaderCode(const uint8_t (&bytes)[Size])
 {
 	ShaderCode code(Size);
 	std::copy(bytes, bytes + Size, reinterpret_cast<unsigned char *>(code.data()));
