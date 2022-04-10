@@ -1,7 +1,7 @@
 name: CI
 on:
   push:
-    branches: [ main. workflow ]
+    branches: [ main, workflow ]
   pull_request:
     branches: [ main ]
 
