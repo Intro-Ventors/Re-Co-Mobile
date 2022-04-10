@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:reality_core/screens/auth/sign_in.dart';
-import 'package:reality_core/screens/home/bottom_panel.dart';
 import 'package:reality_core/screens/home/edit_profile.dart';
 import 'package:reality_core/screens/home/faq_page.dart';
 import 'package:reality_core/screens/home/memories.dart';
@@ -25,7 +24,7 @@ class DarwerMenu extends StatelessWidget {
               gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  stops: [
+                  stops: const [
                 0.0,
                 1.0
               ],
@@ -41,7 +40,7 @@ class DarwerMenu extends StatelessWidget {
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
-                    stops: [0.0, 1.0],
+                    stops: const [0.0, 1.0],
                     colors: [
                       Colors.cyan.withOpacity(0.5),
                       Colors.black.withOpacity(0.2),
@@ -63,16 +62,19 @@ class DarwerMenu extends StatelessWidget {
                 leading: Icon(
                   Icons.settings,
                   size: _drawerIconSize,
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
                 title: Text(
                   'Settings',
                   style: TextStyle(
-                      fontSize: 17, color: Theme.of(context).accentColor),
+                      fontSize: 17,
+                      color: Theme.of(context).colorScheme.secondary),
                 ),
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SettingsPage()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SettingsPage()));
                 },
               ),
               Divider(
@@ -82,12 +84,12 @@ class DarwerMenu extends StatelessWidget {
               ListTile(
                 leading: Icon(Icons.question_mark,
                     size: _drawerIconSize,
-                    color: Theme.of(context).accentColor),
+                    color: Theme.of(context).colorScheme.secondary),
                 title: Text(
                   'FAQ',
                   style: TextStyle(
                       fontSize: _drawerFontSize,
-                      color: Theme.of(context).accentColor),
+                      color: Theme.of(context).colorScheme.secondary),
                 ),
                 onTap: () {
                   Navigator.push(
@@ -104,18 +106,19 @@ class DarwerMenu extends StatelessWidget {
                 leading: Icon(
                   Icons.person,
                   size: _drawerIconSize,
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
                 title: Text(
                   'Profile',
                   style: TextStyle(
                       fontSize: _drawerFontSize,
-                      color: Theme.of(context).accentColor),
+                      color: Theme.of(context).colorScheme.secondary),
                 ),
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => EditProfilePage()),
+                    MaterialPageRoute(
+                        builder: (context) => const EditProfilePage()),
                   );
                 },
               ),
@@ -127,13 +130,13 @@ class DarwerMenu extends StatelessWidget {
                 leading: Icon(
                   Icons.folder_special_outlined,
                   size: _drawerIconSize,
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
                 title: Text(
                   'Memories',
                   style: TextStyle(
                       fontSize: _drawerFontSize,
-                      color: Theme.of(context).accentColor),
+                      color: Theme.of(context).colorScheme.secondary),
                 ),
                 onTap: () {
                   Navigator.push(
@@ -150,13 +153,13 @@ class DarwerMenu extends StatelessWidget {
                 leading: Icon(
                   Icons.logout_rounded,
                   size: _drawerIconSize,
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
                 title: Text(
                   'Logout',
                   style: TextStyle(
                       fontSize: _drawerFontSize,
-                      color: Theme.of(context).accentColor),
+                      color: Theme.of(context).colorScheme.secondary),
                 ),
                 onTap: () {
                   logout(context);

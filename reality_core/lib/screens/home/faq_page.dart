@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+//import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:reality_core/models/faq_model.dart';
 import 'package:reality_core/themes/card_view.dart';
@@ -13,6 +13,7 @@ class FaqPage extends StatefulWidget {
 class _FaqPageState extends State<FaqPage> {
   final List<Object> _faqList = [];
 
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     getUserQuestionList();

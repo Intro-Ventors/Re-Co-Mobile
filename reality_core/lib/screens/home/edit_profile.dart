@@ -23,9 +23,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
   UserModel loggedInUser = const UserModel();
   bool showPassword = false;
 
-  final fNameUpdateText = new TextEditingController();
-  final sNameUpdateText = new TextEditingController();
-  final emailUpdateText = new TextEditingController();
+  final fNameUpdateText = TextEditingController();
+  final sNameUpdateText = TextEditingController();
+  final emailUpdateText = TextEditingController();
 
   Uint8List? _image;
 
@@ -61,7 +61,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         controller: fNameUpdateText,
         keyboardType: TextInputType.name,
         validator: (value) {
-          RegExp regex = new RegExp(r'^.{3,}$');
+          RegExp regex = RegExp(r'^.{3,}$');
           if (value!.isEmpty) {
             return ("First Name cannot be Empty");
           }
@@ -158,7 +158,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ),
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => SettingsPage()));
+                  builder: (BuildContext context) => const SettingsPage()));
             },
           ),
         ],

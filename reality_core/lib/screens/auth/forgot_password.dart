@@ -18,7 +18,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   // our form key
   final _formKey = GlobalKey<FormState>();
   // editing Controller
-  final emailEditingController = new TextEditingController();
+  final emailEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
