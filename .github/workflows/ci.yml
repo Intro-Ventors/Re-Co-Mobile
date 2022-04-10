@@ -17,10 +17,7 @@ jobs:
       - uses: subosito/flutter-action@v1 #3rd party repo
         with:
           channel: "stable"
-      - run: cd reality_core
-      - run: flutter pub get
-      - run: flutter analyze
-      - run: flutter test
+      - run: cd reality_core && flutter pub get && flutter analyze && flutter test
 
   build_ios:
     name: Build Flutter (iOS)
@@ -34,10 +31,7 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: "stable"
-      - run: cd reality_core
-      - run: flutter pub get
-      - run: flutter clean
-      - run: flutter build ios --release --no-codesign
+      - run: cd reality_core && flutter pub get && flutter clean && flutter build ios --release --no-codesign
 
   build_appbundle:
     name: Build Flutter (Android)
@@ -51,7 +45,4 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: "stable"
-      - run: cd reality_core
-      - run: flutter pub get
-      - run: flutter clean
-      - run: flutter build appbundle
+      - run: cd reality_core && flutter pub get && flutter clean && flutter build appbundle
