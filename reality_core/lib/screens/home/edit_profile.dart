@@ -75,8 +75,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "${loggedInUser.firstName}",
-          hintStyle:
-              const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          hintStyle: const TextStyle(color: Colors.white),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           ),
@@ -99,8 +98,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "${loggedInUser.secondName}",
-          hintStyle:
-              const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          hintStyle: const TextStyle(color: Colors.white),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           ),
@@ -127,8 +125,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "${loggedInUser.email}",
-          hintStyle:
-              const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          hintStyle: const TextStyle(color: Colors.white),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           ),
@@ -216,6 +213,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   OutlineButton(
+                    borderSide: const BorderSide(color: Colors.white),
                     padding: const EdgeInsets.symmetric(horizontal: 50),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)),
@@ -227,7 +225,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         style: TextStyle(
                             fontSize: 14,
                             letterSpacing: 2.2,
-                            color: Colors.black)),
+                            color: Colors.white)),
                   ),
                   RaisedButton(
                     onPressed: () async {
@@ -259,6 +257,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                         docUser.update({'profilePics': photoUrl});
                       }
+
+                      setState(() {});
 
                       Fluttertoast.showToast(msg: "Profile Details Updated!");
                     },

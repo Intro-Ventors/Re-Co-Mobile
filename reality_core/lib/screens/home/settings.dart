@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:reality_core/screens/auth/signIn.dart';
 
@@ -39,15 +38,15 @@ class _SettingsPageState extends State<SettingsPage> {
               height: 30,
             ),
             Row(
-              children: <Widget>[
-                const Icon(
+              children: const <Widget>[
+                Icon(
                   Icons.add_box,
                   color: Colors.cyan,
                 ),
-                const SizedBox(
+                SizedBox(
                   width: 8,
                 ),
-                const Text(
+                Text(
                   "General",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
@@ -67,15 +66,15 @@ class _SettingsPageState extends State<SettingsPage> {
               height: 40,
             ),
             Row(
-              children: <Widget>[
-                const Icon(
+              children: const <Widget>[
+                Icon(
                   Icons.person,
                   color: Colors.cyan,
                 ),
-                const SizedBox(
+                SizedBox(
                   width: 8,
                 ),
-                const Text(
+                Text(
                   "Account",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
@@ -90,22 +89,20 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             buildAccountOptionRow(context, "Update Account"),
             buildAccountOptionRow(context, "Change Resolution"),
-            //buildAccountOptionRow(context, "Social"),
-            //buildAccountOptionRow(context, "Language"),
             buildAccountOptionRow(context, "Privacy and security"),
             const SizedBox(
               height: 40,
             ),
             Row(
-              children: [
-                const Icon(
+              children: const <Widget>[
+                Icon(
                   Icons.volume_up_outlined,
                   color: Colors.cyan,
                 ),
-                const SizedBox(
+                SizedBox(
                   width: 8,
                 ),
-                const Text(
+                Text(
                   "Notifications",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
@@ -126,13 +123,14 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             Center(
               child: OutlineButton(
+                borderSide: const BorderSide(color: Colors.white),
                 padding: const EdgeInsets.symmetric(horizontal: 40),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20)),
                 onPressed: () {},
                 child: const Text("SIGN OUT",
                     style: TextStyle(
-                        fontSize: 16, letterSpacing: 2.2, color: Colors.black)),
+                        fontSize: 16, letterSpacing: 2.2, color: Colors.white)),
               ),
             )
           ],
@@ -150,7 +148,7 @@ class _SettingsPageState extends State<SettingsPage> {
           style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w500,
-              color: Colors.grey[600]),
+              color: Colors.grey[200]),
         ),
         Switch(
           value: isSwitched,
@@ -176,7 +174,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 title: Text(title),
                 content: Column(
                   mainAxisSize: MainAxisSize.min,
-                  children: [
+                  children: const <Widget>[
                     Text("Option 1"),
                     Text("Option 2"),
                     Text("Option 3"),
@@ -202,7 +200,7 @@ class _SettingsPageState extends State<SettingsPage> {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w500,
-                color: Colors.grey[600],
+                color: Colors.grey[200],
               ),
             ),
             const Icon(

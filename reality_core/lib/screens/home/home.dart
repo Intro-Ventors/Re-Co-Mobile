@@ -49,6 +49,8 @@ class HomeScreenState extends State<Home> {
       ),
       drawer: DarwerMenu(),
       body: SlidingUpPanel(
+        minHeight: MediaQuery.of(context).size.height * 0.1,
+        maxHeight: MediaQuery.of(context).size.height * 0.7,
         body: Center(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(20, 20, 20, 100),
@@ -90,7 +92,7 @@ class HomeScreenState extends State<Home> {
           controller: controller,
           panelController: panelController,
         ),
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(12.0)),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(20.0)),
         parallaxEnabled: true,
         parallaxOffset: 0.2,
       ),

@@ -35,23 +35,27 @@ class _PanelWidgetState extends State<PanelWidget> {
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        body: ListView(
-          physics: const BouncingScrollPhysics(),
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            const SizedBox(
-              height: 12,
-            ),
-            buildDragHandle(),
-            const SizedBox(
-              height: 36,
-            ),
-            buildAboutText(),
-            const SizedBox(
-              height: 36,
-            ),
-          ],
+  Widget build(BuildContext context) => ClipRRect(
+        borderRadius: const BorderRadius.horizontal(
+            left: Radius.circular(20.0), right: Radius.circular(20.0)),
+        child: Scaffold(
+          backgroundColor: Colors.cyan,
+          body: ListView(
+            clipBehavior: Clip.antiAlias,
+            children: <Widget>[
+              const SizedBox(
+                height: 12,
+              ),
+              buildDragHandle(),
+              const SizedBox(
+                height: 36,
+              ),
+              buildAboutText(),
+              const SizedBox(
+                height: 36,
+              ),
+            ],
+          ),
         ),
       );
 
@@ -61,7 +65,7 @@ class _PanelWidgetState extends State<PanelWidget> {
           width: 30,
           height: 5,
           decoration: BoxDecoration(
-              color: Colors.grey, borderRadius: BorderRadius.circular(18)),
+              color: Colors.black, borderRadius: BorderRadius.circular(18)),
         ),
       ),
       onTap: togglePanel);
@@ -75,12 +79,14 @@ class _PanelWidgetState extends State<PanelWidget> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-                "Welcome Back ${loggedInUser.firstName} ${loggedInUser.secondName}",
-                style: const TextStyle(
-                    color: Colors.black54,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20)),
+            Center(
+              child: Text(
+                  "Welcome Back ${loggedInUser.firstName} ${loggedInUser.secondName}",
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20)),
+            ),
             const SizedBox(
               height: 35,
             ),
@@ -103,6 +109,9 @@ class _PanelWidgetState extends State<PanelWidget> {
               height: 30,
             ),
             FlatButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                color: Colors.blue[900],
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -130,7 +139,7 @@ class _PanelWidgetState extends State<PanelWidget> {
             hintStyle: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
-              color: Colors.blueGrey,
+              color: Colors.white,
             )),
       ),
     );

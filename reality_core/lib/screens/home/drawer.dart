@@ -15,149 +15,154 @@ class DarwerMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      child: Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                stops: [
-              0.0,
-              1.0
-            ],
-                colors: [
-              Theme.of(context).primaryColor.withOpacity(0.2),
-              Theme.of(context).accentColor.withOpacity(0.5),
-            ])),
-        child: ListView(
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-                gradient: LinearGradient(
+    return ClipRRect(
+      borderRadius: const BorderRadius.vertical(
+          top: Radius.circular(25.0), bottom: Radius.circular(25.0)),
+      child: Drawer(
+        child: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  stops: [0.0, 1.0],
+                  stops: [
+                0.0,
+                1.0
+              ],
                   colors: [
-                    Theme.of(context).primaryColor,
-                    Theme.of(context).accentColor,
-                  ],
+                Colors.cyan.withOpacity(0.5),
+                Colors.black.withOpacity(0.2),
+              ])),
+          child: ListView(
+            children: [
+              DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    stops: [0.0, 1.0],
+                    colors: [
+                      Colors.cyan.withOpacity(0.5),
+                      Colors.black.withOpacity(0.2),
+                    ],
+                  ),
+                ),
+                child: Container(
+                  alignment: Alignment.bottomLeft,
+                  child: const Text(
+                    "Reality Core",
+                    style: TextStyle(
+                        fontSize: 25,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
-              child: Container(
-                alignment: Alignment.bottomLeft,
-                child: const Text(
-                  "Reality Core",
+              ListTile(
+                leading: Icon(
+                  Icons.settings,
+                  size: _drawerIconSize,
+                  color: Theme.of(context).accentColor,
+                ),
+                title: Text(
+                  'Settings',
                   style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold),
+                      fontSize: 17, color: Theme.of(context).accentColor),
                 ),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SettingsPage()));
+                },
               ),
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.settings,
-                size: _drawerIconSize,
-                color: Theme.of(context).accentColor,
+              Divider(
+                color: Theme.of(context).primaryColor,
+                height: 1,
               ),
-              title: Text(
-                'Settings',
-                style: TextStyle(
-                    fontSize: 17, color: Theme.of(context).accentColor),
-              ),
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SettingsPage()));
-              },
-            ),
-            Divider(
-              color: Theme.of(context).primaryColor,
-              height: 1,
-            ),
-            ListTile(
-              leading: Icon(Icons.question_mark,
-                  size: _drawerIconSize, color: Theme.of(context).accentColor),
-              title: Text(
-                'FAQ',
-                style: TextStyle(
-                    fontSize: _drawerFontSize,
+              ListTile(
+                leading: Icon(Icons.question_mark,
+                    size: _drawerIconSize,
                     color: Theme.of(context).accentColor),
+                title: Text(
+                  'FAQ',
+                  style: TextStyle(
+                      fontSize: _drawerFontSize,
+                      color: Theme.of(context).accentColor),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const FaqPage()),
+                  );
+                },
               ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const FaqPage()),
-                );
-              },
-            ),
-            Divider(
-              color: Theme.of(context).primaryColor,
-              height: 1,
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.person,
-                size: _drawerIconSize,
-                color: Theme.of(context).accentColor,
+              Divider(
+                color: Theme.of(context).primaryColor,
+                height: 1,
               ),
-              title: Text(
-                'Profile',
-                style: TextStyle(
-                    fontSize: _drawerFontSize,
-                    color: Theme.of(context).accentColor),
+              ListTile(
+                leading: Icon(
+                  Icons.person,
+                  size: _drawerIconSize,
+                  color: Theme.of(context).accentColor,
+                ),
+                title: Text(
+                  'Profile',
+                  style: TextStyle(
+                      fontSize: _drawerFontSize,
+                      color: Theme.of(context).accentColor),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => EditProfilePage()),
+                  );
+                },
               ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => EditProfilePage()),
-                );
-              },
-            ),
-            Divider(
-              color: Theme.of(context).primaryColor,
-              height: 1,
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.folder_special_outlined,
-                size: _drawerIconSize,
-                color: Theme.of(context).accentColor,
+              Divider(
+                color: Theme.of(context).primaryColor,
+                height: 1,
               ),
-              title: Text(
-                'Memories',
-                style: TextStyle(
-                    fontSize: _drawerFontSize,
-                    color: Theme.of(context).accentColor),
+              ListTile(
+                leading: Icon(
+                  Icons.folder_special_outlined,
+                  size: _drawerIconSize,
+                  color: Theme.of(context).accentColor,
+                ),
+                title: Text(
+                  'Memories',
+                  style: TextStyle(
+                      fontSize: _drawerFontSize,
+                      color: Theme.of(context).accentColor),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Memories()),
+                  );
+                },
               ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Memories()),
-                );
-              },
-            ),
-            Divider(
-              color: Theme.of(context).primaryColor,
-              height: 1,
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.logout_rounded,
-                size: _drawerIconSize,
-                color: Theme.of(context).accentColor,
+              Divider(
+                color: Theme.of(context).primaryColor,
+                height: 1,
               ),
-              title: Text(
-                'Logout',
-                style: TextStyle(
-                    fontSize: _drawerFontSize,
-                    color: Theme.of(context).accentColor),
+              ListTile(
+                leading: Icon(
+                  Icons.logout_rounded,
+                  size: _drawerIconSize,
+                  color: Theme.of(context).accentColor,
+                ),
+                title: Text(
+                  'Logout',
+                  style: TextStyle(
+                      fontSize: _drawerFontSize,
+                      color: Theme.of(context).accentColor),
+                ),
+                onTap: () {
+                  logout(context);
+                },
               ),
-              onTap: () {
-                logout(context);
-              },
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

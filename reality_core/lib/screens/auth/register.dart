@@ -111,23 +111,30 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     fontWeight: FontWeight.bold,
                     fontSize: 30),
               ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Text(
+                "Sign up below",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25),
+              ),
               Flexible(
                 child: Container(),
                 flex: 2,
-              ),
-              const SizedBox(
-                height: 50,
               ),
               Stack(
                 children: [
                   _image != null
                       ? CircleAvatar(
-                          radius: 64,
+                          radius: 75,
                           backgroundImage: MemoryImage(_image!),
                           backgroundColor: Colors.red,
                         )
                       : const CircleAvatar(
-                          radius: 64,
+                          radius: 75,
                           backgroundImage: NetworkImage(
                               'https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8cHJvZmlsZXxlbnwwfHwwfHw%3D&w=1000&q=80'),
                           backgroundColor: Colors.red,
