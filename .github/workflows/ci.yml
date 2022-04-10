@@ -22,7 +22,7 @@ jobs:
 
       - name: Running flutter
         working-directory: ${{github.workspace}}/reality_core
-        run: flutter pub get && flutter analyze && flutter test
+        run: flutter pub get && flutter analyze
 
   build_ios:
     name: Build Flutter (iOS)
