@@ -15,7 +15,7 @@ jobs:
           submodules: 'true'
       - uses: actions/setup-java@v1
         with:
-          java-version: "17.x"
+          java-version: "1.8"
       - uses: subosito/flutter-action@v1 #3rd party repo
         with:
           channel: "stable"
@@ -23,25 +23,6 @@ jobs:
       - name: Running flutter
         working-directory: ${{github.workspace}}/reality_core
         run: flutter pub get && flutter analyze
-
-  build_ios:
-    name: Build Flutter (iOS)
-    needs: [flutter_test]
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          submodules: 'true'
-      - uses: actions/setup-java@v1
-        with:
-          java-version: "17.x"
-      - uses: subosito/flutter-action@v1
-        with:
-          channel: "stable"
-
-      - name: Running flutter
-        working-directory: ${{github.workspace}}/reality_core
-        run: flutter pub get && flutter clean && flutter build ios --release --no-codesign
 
   build_appbundle:
     name: Build Flutter (Android)
@@ -53,7 +34,7 @@ jobs:
           submodules: 'true'
       - uses: actions/setup-java@v1
         with:
-          java-version: "17.x"
+          java-version: "1.8"
       - uses: subosito/flutter-action@v1
         with:
           channel: "stable"
