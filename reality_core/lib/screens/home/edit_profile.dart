@@ -12,6 +12,8 @@ import 'package:reality_core/screens/home/home.dart';
 import 'package:reality_core/screens/home/settings.dart';
 
 class EditProfilePage extends StatefulWidget {
+  const EditProfilePage({Key? key}) : super(key: key);
+
   @override
   _EditProfilePageState createState() => _EditProfilePageState();
 }

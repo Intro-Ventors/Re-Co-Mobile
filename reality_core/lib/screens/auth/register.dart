@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:reality_core/screens/auth/signIn.dart';
+import 'package:reality_core/screens/auth/sign_in.dart';
 import 'package:reality_core/screens/auth/utils.dart';
 import 'package:reality_core/screens/home/home.dart';
 import 'auth_methods.dart';

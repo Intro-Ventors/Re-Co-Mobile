@@ -18,7 +18,7 @@ class PanelWidget extends StatefulWidget {
 
 class _PanelWidgetState extends State<PanelWidget> {
   User? user = FirebaseAuth.instance.currentUser;
-  UserModel loggedInUser = UserModel();
+  UserModel loggedInUser = const UserModel();
   bool showPassword = false;
 
   @override
@@ -129,7 +129,7 @@ class _PanelWidgetState extends State<PanelWidget> {
       child: TextField(
         enableInteractiveSelection: false,
         onTap: () {
-          FocusScope.of(context).requestFocus(new FocusNode());
+          FocusScope.of(context).requestFocus(FocusNode());
         },
         decoration: InputDecoration(
             contentPadding: const EdgeInsets.only(bottom: 3),

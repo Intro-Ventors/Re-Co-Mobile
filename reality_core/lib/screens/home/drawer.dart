@@ -1,17 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:reality_core/screens/auth/signIn.dart';
+import 'package:reality_core/screens/auth/sign_in.dart';
 import 'package:reality_core/screens/home/bottom_panel.dart';
 import 'package:reality_core/screens/home/edit_profile.dart';
 import 'package:reality_core/screens/home/faq_page.dart';
 import 'package:reality_core/screens/home/memories.dart';
 import 'package:reality_core/screens/home/settings.dart';
 
+@immutable
 class DarwerMenu extends StatelessWidget {
-  DarwerMenu({Key? key}) : super(key: key);
+  const DarwerMenu({Key? key}) : super(key: key);
 
-  double _drawerIconSize = 24;
-  double _drawerFontSize = 17;
+  final double _drawerIconSize = 24;
+  final double _drawerFontSize = 17;
 
   @override
   Widget build(BuildContext context) {

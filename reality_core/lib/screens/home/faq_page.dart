@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:reality_core/models/faq_model.dart';
-import 'package:reality_core/themes/cardView.dart';
+import 'package:reality_core/themes/card_view.dart';
 
 class FaqPage extends StatefulWidget {
   const FaqPage({Key? key}) : super(key: key);
@@ -11,10 +11,9 @@ class FaqPage extends StatefulWidget {
 }
 
 class _FaqPageState extends State<FaqPage> {
-  List<Object> _faqList = [];
+  final List<Object> _faqList = [];
 
-  @override
-  void didChangeDependancies() {
+  void didChangeDependencies() {
     super.didChangeDependencies();
     getUserQuestionList();
   }
@@ -36,11 +35,6 @@ class _FaqPageState extends State<FaqPage> {
   }
 
   Future getUserQuestionList() async {
-    var data = await FirebaseFirestore.instance
-        .collection('faq_collection')
-        .doc()
-        .get();
-
     /* setState(() {
       _faqList = List.from(data.docs.map((doc) => Question.fromSnapshot(doc)));
     }); */

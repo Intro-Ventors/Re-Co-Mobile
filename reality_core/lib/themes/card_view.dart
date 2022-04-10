@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:reality_core/models/faq_model.dart';
 
+@immutable
 class QuestionCard extends StatelessWidget {
   final Question _question;
 
-  QuestionCard(this._question);
+  const QuestionCard(this._question, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

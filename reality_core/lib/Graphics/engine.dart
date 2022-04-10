@@ -5,7 +5,6 @@ import 'dart:io';
 import 'package:ffi/ffi.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:vector_math/vector_math.dart';
 
 import 'camera.dart';
 
@@ -85,15 +84,6 @@ class Engine {
     final data = _getImageData(pInstance);
     return Image.memory(data.pImageData.asTypedList(
         data.mWidth * data.mHeight * data.mDepth * data.mBitsPerPixel));
-  }
-
-  Pointer<Uint8> _toPointer(ByteData bytes) {
-    final buffer = calloc<Uint8>(bytes.lengthInBytes);
-    for (var i = 0; i < bytes.lengthInBytes; i++) {
-      buffer.elementAt(i).value = bytes.getUint8(i);
-    }
-
-    return buffer;
   }
 
   /// Destroy the engine.

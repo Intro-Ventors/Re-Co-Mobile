@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:reality_core/Graphics/engine.dart';
-import 'package:reality_core/providers/userProvider.dart';
-import 'package:reality_core/screens/auth/signIn.dart';
+import 'package:reality_core/providers/user_provider.dart';
+import 'package:reality_core/screens/auth/sign_in.dart';
 import 'package:reality_core/screens/home/home.dart';
 
 Future<ByteData> loadAsset(String asset) async {
@@ -28,21 +28,23 @@ void testVulkanBackend() async {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  try {
-    // testVulkanBackend(); // JUST FOR DEBUGGING!
-    // [Dhiraj] I removed the graphics engine for a bit, because there is a tiny
-    // issue with the queues and stuff so until I debug it, I cant commit that
-    // part. Everything else seems to be working fine and I got the validation
-    // layers to work. Until the queue issue is resolved, keep this part commented.
-  } catch (e) {
-    print(e.toString());
-  }
+  //try {
+  //  testVulkanBackend(); // JUST FOR DEBUGGING!
+  //} catch (e) {
+  //  print(e.toString());
+  //}
+  // [Dhiraj] I removed the graphics engine for a bit, because there is a tiny
+  // issue with the queues and stuff so until I debug it, I cant commit that
+  // part. Everything else seems to be working fine and I got the validation
+  // layers to work. Until the queue issue is resolved, keep this part commented.
 
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
