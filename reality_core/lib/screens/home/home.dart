@@ -43,7 +43,7 @@ class HomeScreenState extends State<Home> {
           )
         ],
       ),
-      drawer: DarwerMenu(),
+      drawer: const DarwerMenu(),
       body: SlidingUpPanel(
         minHeight: MediaQuery.of(context).size.height * 0.1,
         maxHeight: MediaQuery.of(context).size.height * 0.7,
@@ -56,7 +56,7 @@ class HomeScreenState extends State<Home> {
               children: <Widget>[
                 SizedBox(
                   height: 250,
-                  child: Container(
+                  child: SizedBox(
                     height: 180.0,
                     width: 180.0,
                     child: FittedBox(
