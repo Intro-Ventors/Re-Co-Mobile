@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:reality_core/themes/loading.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({Key? key}) : super(key: key);
@@ -58,7 +57,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       child: Container(
         child: !_isLoading
             ? const Text(
-                'Sign up',
+                'SUBMIT',
               )
             : const CircularProgressIndicator(
                 color: Colors.white,
