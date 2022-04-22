@@ -1,14 +1,12 @@
-import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:reality_core/Graphics/engine.dart';
 import 'package:reality_core/providers/user_provider.dart';
 import 'package:reality_core/screens/home/home.dart';
 import 'package:reality_core/themes/splash_screen.dart';
-import 'package:page_transition/page_transition.dart';
-import 'package:reality_core/screens/auth/sign_in.dart';
-
 
 Future<ByteData> loadAsset(String asset) async {
   return await rootBundle.load(asset);
@@ -48,7 +46,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
