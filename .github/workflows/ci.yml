@@ -20,9 +20,13 @@ jobs:
         with:
           channel: "stable"
 
-      - name: Running flutter
+      - name: Resolving flutter dependencies
         working-directory: ${{github.workspace}}/reality_core
-        run: flutter pub get && flutter analyze
+        run: flutter pub get
+
+      - name: Running code analysis
+        working-directory: ${{github.workspace}}/reality_core
+        run: flutter analyze
 
   build_appbundle:
     name: Build Flutter (Android)
@@ -39,6 +43,14 @@ jobs:
         with:
           channel: "stable"
 
-      - name: Running flutter
+      - name: Resolving flutter dependencies
         working-directory: ${{github.workspace}}/reality_core
-        run: flutter pub get && flutter clean && flutter build appbundle
+        run: flutter pub get
+
+      - name: Cleaning the previous build
+        working-directory: ${{github.workspace}}/reality_core
+        run: flutter clean
+
+      - name: Building the app
+        working-directory: ${{github.workspace}}/reality_core
+        run: flutter build appbundle
