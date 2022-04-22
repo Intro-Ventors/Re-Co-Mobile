@@ -73,7 +73,7 @@ class HomeScreenState extends State<Home> {
                   ),
                 ),
                 const Text(
-                  "Start Straming",
+                  "Start Streaming",
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(

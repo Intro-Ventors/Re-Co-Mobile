@@ -3,11 +3,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class UserModel {
   final String? email;
   final String? uid;
-  final String? profilePic;
+  String? profilePic;
   final String? firstName;
   final String? secondName;
 
-  const UserModel(
+  UserModel(
       {this.firstName, this.secondName, this.uid, this.profilePic, this.email});
 
   static UserModel fromSnap(DocumentSnapshot snap) {

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Memories extends StatefulWidget {
-  const Memories({Key? key}) : super(key: key);
+class VRBackgrounds extends StatefulWidget {
+  const VRBackgrounds({Key? key}) : super(key: key);
 
   @override
-  State<Memories> createState() => _MemoriesState();
+  State<VRBackgrounds> createState() => _VRBackgroundsState();
 }
 
-class _MemoriesState extends State<Memories> {
+class _VRBackgroundsState extends State<VRBackgrounds> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

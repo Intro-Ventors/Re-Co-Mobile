@@ -20,7 +20,7 @@ class PanelWidget extends StatefulWidget {
 
 class _PanelWidgetState extends State<PanelWidget> {
   User? user = FirebaseAuth.instance.currentUser;
-  UserModel loggedInUser = const UserModel();
+  UserModel loggedInUser = UserModel();
   bool showPassword = false;
 
   @override

@@ -5,8 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:reality_core/Graphics/engine.dart';
 import 'package:reality_core/providers/user_provider.dart';
-import 'package:reality_core/screens/auth/sign_in.dart';
 import 'package:reality_core/screens/home/home.dart';
+import 'package:reality_core/themes/splash_screen.dart';
 
 Future<ByteData> loadAsset(String asset) async {
   return await rootBundle.load(asset);
@@ -82,7 +82,7 @@ class MyApp extends StatelessWidget {
               );
             }
 
-            return const LoginScreen();
+            return const SplashScreen();
           },
         ),
       ),
