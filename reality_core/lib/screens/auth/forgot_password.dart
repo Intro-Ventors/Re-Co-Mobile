@@ -13,12 +13,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   final _auth = FirebaseAuth.instance;
   // string for displaying the error Message
   String? errorMessage;
-  bool _isLoading = false;
+  final bool _isLoading = false;
 
   // our form key
   final _formKey = GlobalKey<FormState>();
   // editing Controller
-  final emailEditingController = new TextEditingController();
+  final emailEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

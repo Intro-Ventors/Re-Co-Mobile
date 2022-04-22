@@ -1,6 +1,5 @@
 // ignore_for_file: deprecated_member_use
 
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:reality_core/screens/auth/auth_methods.dart';
 import 'package:reality_core/screens/auth/forgot_password.dart';
@@ -18,7 +17,6 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   // form key
-  final _formKey = GlobalKey<FormState>();
 
   // editing controller
   final TextEditingController _emailController = TextEditingController();

@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +20,7 @@ class PanelWidget extends StatefulWidget {
 
 class _PanelWidgetState extends State<PanelWidget> {
   User? user = FirebaseAuth.instance.currentUser;
-  UserModel loggedInUser = UserModel();
+  UserModel loggedInUser = const UserModel();
   bool showPassword = false;
 
   @override
@@ -115,7 +117,8 @@ class _PanelWidgetState extends State<PanelWidget> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => EditProfilePage()),
+                    MaterialPageRoute(
+                        builder: (context) => const EditProfilePage()),
                   );
                 },
                 child: const Text('Edit Profile'))
@@ -129,7 +132,7 @@ class _PanelWidgetState extends State<PanelWidget> {
       child: TextField(
         enableInteractiveSelection: false,
         onTap: () {
-          FocusScope.of(context).requestFocus(new FocusNode());
+          FocusScope.of(context).requestFocus(FocusNode());
         },
         decoration: InputDecoration(
             contentPadding: const EdgeInsets.only(bottom: 3),
