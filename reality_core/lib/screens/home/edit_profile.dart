@@ -22,7 +22,7 @@ class EditProfilePage extends StatefulWidget {
 
 class _EditProfilePageState extends State<EditProfilePage> {
   User? user = FirebaseAuth.instance.currentUser;
-  UserModel loggedInUser = const UserModel();
+  UserModel loggedInUser = UserModel();
   bool showPassword = false;
 
   final fNameUpdateText = TextEditingController();
@@ -149,7 +149,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
             color: Colors.white,
           ),
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (BuildContext context) => const Home()));
           },
         ),
         actions: [
@@ -260,6 +261,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 'profilePics', _image!, false);
 
                         docUser.update({'profilePics': photoUrl});
+                        loggedInUser.profilePic = photoUrl;
                       }
 
                       setState(() {});

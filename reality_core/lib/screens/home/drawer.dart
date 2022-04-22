@@ -133,7 +133,7 @@ class DarwerMenu extends StatelessWidget {
                   color: Theme.of(context).colorScheme.secondary,
                 ),
                 title: Text(
-                  'Memories',
+                  'Virtual Backgrounds',
                   style: TextStyle(
                       fontSize: _drawerFontSize,
                       color: Theme.of(context).colorScheme.secondary),
@@ -141,7 +141,8 @@ class DarwerMenu extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const Memories()),
+                    MaterialPageRoute(
+                        builder: (context) => const VRBackgrounds()),
                   );
                 },
               ),

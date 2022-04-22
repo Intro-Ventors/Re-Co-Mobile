@@ -3,6 +3,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:reality_core/screens/auth/sign_in.dart';
+import 'package:reality_core/screens/home/edit_profile.dart';
+import 'package:reality_core/screens/home/memories.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -65,7 +67,7 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             buildNotificationOptionRow("Dark Mode", false),
             buildNotificationOptionRow("Data Saver", false),
-            buildAccountOptionRow(context, "Virtual Backgrounds"),
+            buildVBOptionRow(context, "Virtual Backgrounds"),
             const SizedBox(
               height: 40,
             ),
@@ -91,7 +93,7 @@ class _SettingsPageState extends State<SettingsPage> {
             const SizedBox(
               height: 10,
             ),
-            buildAccountOptionRow(context, "Update Account"),
+            buildUpdateOptionRow(context, "Update Account"),
             buildAccountOptionRow(context, "Change Resolution"),
             buildAccountOptionRow(context, "Privacy and security"),
             const SizedBox(
@@ -168,31 +170,11 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
-  GestureDetector buildAccountOptionRow(BuildContext context, String title) {
+  GestureDetector buildVBOptionRow(BuildContext context, String title) {
     return GestureDetector(
       onTap: () {
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text(title),
-                content: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: const <Widget>[
-                    Text("Option 1"),
-                    Text("Option 2"),
-                    Text("Option 3"),
-                  ],
-                ),
-                actions: [
-                  FlatButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: const Text("Close")),
-                ],
-              );
-            });
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (BuildContext context) => const VRBackgrounds()));
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -218,6 +200,84 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 }
 
+GestureDetector buildUpdateOptionRow(BuildContext context, String title) {
+  return GestureDetector(
+    onTap: () {
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (BuildContext context) => const EditProfilePage()));
+    },
+    child: Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+              color: Colors.grey[200],
+            ),
+          ),
+          const Icon(
+            Icons.arrow_forward_ios,
+            color: Colors.grey,
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+GestureDetector buildAccountOptionRow(BuildContext context, String title) {
+  return GestureDetector(
+    onTap: () {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(title),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: const <Widget>[
+                  Text("Option 1"),
+                  Text("Option 2"),
+                  Text("Option 3"),
+                ],
+              ),
+              actions: [
+                FlatButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text("Close")),
+              ],
+            );
+          });
+    },
+    child: Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+              color: Colors.grey[200],
+            ),
+          ),
+          const Icon(
+            Icons.arrow_forward_ios,
+            color: Colors.grey,
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
 Future<void> logout(BuildContext context) async {
   await FirebaseAuth.instance.signOut();
   Navigator.of(context).pushReplacement(
@@ -227,3 +287,5 @@ Future<void> logout(BuildContext context) async {
 //vertual bg
 //darkmode
 //datasaver
+
+

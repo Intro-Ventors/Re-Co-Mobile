@@ -3,9 +3,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:reality_core/Graphics/engine.dart';
-
+import 'package:reality_core/providers/user_provider.dart';
+import 'package:reality_core/screens/home/home.dart';
+import 'package:reality_core/themes/splash_screen.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:reality_core/screens/auth/sign_in.dart';
+
 
 Future<ByteData> loadAsset(String asset) async {
   return await rootBundle.load(asset);
@@ -45,20 +48,44 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Re-Co',
-      theme: ThemeData(
-        primarySwatch: Colors.cyan,
-      ),
-      debugShowCheckedModeBanner: false,
-      home: AnimatedSplashScreen(
-        splash: 'assets/images/logo_icon.png',
-        nextScreen: const LoginScreen(),
-        splashTransition: SplashTransition.scaleTransition,
-        pageTransitionType: PageTransitionType.fade,
-        splashIconSize: 200,
-        duration: 3000,
-        backgroundColor: Colors.cyan,
+
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => UserProvider(),
+        ),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Reality Core',
+        theme: ThemeData.dark().copyWith(
+          scaffoldBackgroundColor: Colors.blue[900],
+        ),
+        home: StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.active) {
+              // Checking if the snapshot has any data or not
+              if (snapshot.hasData) {
+                // if snapshot has data which means user is logged in then we check the width of screen and accordingly display the screen layout
+                return const Home();
+              } else if (snapshot.hasError) {
+                return Center(
+                  child: Text('${snapshot.error}'),
+                );
+              }
+            }
+
+            // means connection to future hasnt been made yet
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+
+            return const SplashScreen();
+          },
+        ),
       ),
     );
   }
