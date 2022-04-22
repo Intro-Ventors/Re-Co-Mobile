@@ -99,7 +99,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 25),
+          padding: const EdgeInsets.symmetric(horizontal: 15),
           width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -158,7 +158,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 textEditingController: firstNameEditingController,
               ),
               const SizedBox(
-                height: 24,
+                height: 20,
               ),
               TextFieldInput(
                 hintText: 'Enter your Second Name',
@@ -166,7 +166,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 textEditingController: secondNameEditingController,
               ),
               const SizedBox(
-                height: 24,
+                height: 20,
               ),
               TextFieldInput(
                 hintText: 'Enter your email',
@@ -174,7 +174,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 textEditingController: emailEditingController,
               ),
               const SizedBox(
-                height: 24,
+                height: 20,
               ),
               TextFieldInput(
                 hintText: 'Enter your password',
@@ -183,7 +183,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 isPass: true,
               ),
               const SizedBox(
-                height: 24,
+                height: 20,
               ),
               InkWell(
                 child: Container(
