@@ -19,6 +19,7 @@ class HomeScreenState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.cyan,
         title: const Text(
           "Home Page",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
@@ -42,8 +43,10 @@ class HomeScreenState extends State<Home> {
           )
         ],
       ),
-      drawer: DarwerMenu(),
+      drawer: const DarwerMenu(),
       body: SlidingUpPanel(
+        minHeight: MediaQuery.of(context).size.height * 0.1,
+        maxHeight: MediaQuery.of(context).size.height * 0.7,
         body: Center(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(20, 20, 20, 100),
@@ -53,7 +56,7 @@ class HomeScreenState extends State<Home> {
               children: <Widget>[
                 SizedBox(
                   height: 250,
-                  child: Container(
+                  child: SizedBox(
                     height: 180.0,
                     width: 180.0,
                     child: FittedBox(
@@ -85,7 +88,7 @@ class HomeScreenState extends State<Home> {
           controller: controller,
           panelController: panelController,
         ),
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(12.0)),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(20.0)),
         parallaxEnabled: true,
         parallaxOffset: 0.2,
       ),

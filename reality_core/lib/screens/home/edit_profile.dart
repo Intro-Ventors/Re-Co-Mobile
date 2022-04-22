@@ -1,45 +1,38 @@
+// ignore_for_file: deprecated_member_use
+
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:reality_core/models/user.dart';
+import 'package:reality_core/screens/auth/storage_methods.dart';
+import 'package:reality_core/screens/auth/utils.dart';
 import 'package:reality_core/screens/home/home.dart';
 import 'package:reality_core/screens/home/settings.dart';
 
-class EditProfile extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: "Settings",
-      home: EditProfilePage(),
-    );
-  }
-}
-
 class EditProfilePage extends StatefulWidget {
+  const EditProfilePage({Key? key}) : super(key: key);
+
   @override
   _EditProfilePageState createState() => _EditProfilePageState();
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
   User? user = FirebaseAuth.instance.currentUser;
-  UserModel loggedInUser = UserModel();
+  UserModel loggedInUser = const UserModel();
   bool showPassword = false;
 
-  final fNameUpdateText = new TextEditingController();
-  final sNameUpdateText = new TextEditingController();
-  final emailUpdateText = new TextEditingController();
+  final fNameUpdateText = TextEditingController();
+  final sNameUpdateText = TextEditingController();
+  final emailUpdateText = TextEditingController();
 
-  final _auth = FirebaseAuth.instance;
+  Uint8List? _image;
 
-  /*  @override
-  void dispose() {
-    fNameUpdateText.dispose();
-    sNameUpdateText.dispose();
-    emailUpdateText.dispose();
-    super.dispose();
-  } */
+  var userData = {};
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -49,8 +42,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
         .doc(user!.uid)
         .get()
         .then((value) {
-      this.loggedInUser = UserModel.fromMap(value.data());
+      loggedInUser = UserModel.fromSnap(value);
       setState(() {});
+    });
+  }
+
+  selectImage() async {
+    Uint8List im = await pickImage(ImageSource.gallery);
+
+    // set state because we need to display the image we selected on the circle avatar
+    setState(() {
+      _image = im;
     });
   }
 
@@ -61,7 +63,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         controller: fNameUpdateText,
         keyboardType: TextInputType.name,
         validator: (value) {
-          RegExp regex = new RegExp(r'^.{3,}$');
+          RegExp regex = RegExp(r'^.{3,}$');
           if (value!.isEmpty) {
             return ("First Name cannot be Empty");
           }
@@ -77,8 +79,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "${loggedInUser.firstName}",
-          hintStyle:
-              const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          hintStyle: const TextStyle(color: Colors.white),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           ),
@@ -101,8 +102,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "${loggedInUser.secondName}",
-          hintStyle:
-              const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          hintStyle: const TextStyle(color: Colors.white),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           ),
@@ -129,8 +129,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "${loggedInUser.email}",
-          hintStyle:
-              const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          hintStyle: const TextStyle(color: Colors.white),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           ),
@@ -150,8 +149,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             color: Colors.white,
           ),
           onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (BuildContext context) => const Home()));
+            Navigator.of(context).pop();
           },
         ),
         actions: [
@@ -162,7 +160,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ),
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => SettingsPage()));
+                  builder: (BuildContext context) => const SettingsPage()));
             },
           ),
         ],
@@ -181,46 +179,26 @@ class _EditProfilePageState extends State<EditProfilePage> {
               Center(
                 child: Stack(
                   children: [
-                    Container(
-                      width: 130,
-                      height: 130,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              width: 4,
-                              color: Theme.of(context).scaffoldBackgroundColor),
-                          boxShadow: [
-                            BoxShadow(
-                                spreadRadius: 2,
-                                blurRadius: 10,
-                                color: Colors.black.withOpacity(0.1),
-                                offset: Offset(0, 10))
-                          ],
-                          shape: BoxShape.circle,
-                          image: const DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(
-                                "https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8cHJvZmlsZXxlbnwwfHwwfHw%3D&w=1000&q=80",
-                              ))),
-                    ),
+                    _image != null
+                        ? CircleAvatar(
+                            radius: 64,
+                            backgroundImage: MemoryImage(_image!),
+                            backgroundColor: Colors.red,
+                          )
+                        : CircleAvatar(
+                            radius: 64,
+                            backgroundImage:
+                                NetworkImage("${loggedInUser.profilePic}"),
+                            backgroundColor: Colors.red,
+                          ),
                     Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              width: 4,
-                              color: Colors.white,
-                            ),
-                            color: Colors.cyan,
-                          ),
-                          child: const Icon(
-                            Icons.edit,
-                            color: Colors.white,
-                          ),
-                        )),
+                      bottom: -10,
+                      left: 80,
+                      child: IconButton(
+                        onPressed: selectImage,
+                        icon: const Icon(Icons.add_a_photo),
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -239,6 +217,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   OutlineButton(
+                    borderSide: const BorderSide(color: Colors.white),
                     padding: const EdgeInsets.symmetric(horizontal: 50),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)),
@@ -250,26 +229,41 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         style: TextStyle(
                             fontSize: 14,
                             letterSpacing: 2.2,
-                            color: Colors.black)),
+                            color: Colors.white)),
                   ),
                   RaisedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       final docUser = FirebaseFirestore.instance
                           .collection("users")
                           .doc(loggedInUser.uid);
-
+                      if (fNameUpdateText.text.isEmpty) {
+                        fNameUpdateText.text = "${loggedInUser.firstName}";
+                      } else {
+                        docUser.update({"firstName": fNameUpdateText.text});
+                        Fluttertoast.showToast(msg: "Profile Details Updated!");
+                      }
                       if (sNameUpdateText.text.isEmpty) {
                         sNameUpdateText.text = "${loggedInUser.secondName}";
+                      } else {
+                        docUser.update({"secondName": sNameUpdateText.text});
+                        Fluttertoast.showToast(msg: "Profile Details Updated!");
                       }
                       if (emailUpdateText.text.isEmpty) {
                         emailUpdateText.text = "${loggedInUser.email}";
+                      } else {
+                        docUser.update({"email": emailUpdateText.text});
+                        Fluttertoast.showToast(msg: "Profile Details Updated!");
+                      }
+                      if (_image.toString() != loggedInUser.profilePic) {
+                        String photoUrl = await StorageMethods()
+                            .uploadImageToStorage(
+                                'profilePics', _image!, false);
+
+                        docUser.update({'profilePics': photoUrl});
                       }
 
-                      docUser.update({
-                        "firstName": fNameUpdateText.text,
-                        "secondName": sNameUpdateText.text,
-                        "email": emailUpdateText.text
-                      });
+                      setState(() {});
+
                       Fluttertoast.showToast(msg: "Profile Details Updated!");
                     },
                     color: Colors.cyan,

@@ -19,7 +19,7 @@ class _MemoriesState extends State<Memories> {
         leading: const BackButton(
           color: Colors.white,
         ),
-        backgroundColor: Theme.of(context).accentColor,
+        backgroundColor: Colors.cyan,
       ),
       body: GridView.count(
         crossAxisCount: 4,
