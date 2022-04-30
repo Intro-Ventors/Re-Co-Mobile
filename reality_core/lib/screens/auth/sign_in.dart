@@ -1,10 +1,10 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:reality_core/screens/auth/auth_methods.dart';
 import 'package:reality_core/screens/auth/forgot_password.dart';
 import 'package:reality_core/screens/auth/register.dart';
-import 'package:reality_core/screens/auth/utils.dart';
 import 'package:reality_core/screens/home/home.dart';
 import 'package:reality_core/themes/text_field_input.dart';
 
@@ -48,7 +48,8 @@ class _LoginScreenState extends State<LoginScreen> {
       setState(() {
         _isLoading = false;
       });
-      showSnackBar(context, res);
+      Fluttertoast.showToast(msg: res);
+      //showSnackBar(context, res);
     }
   }
 
