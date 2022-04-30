@@ -2,6 +2,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:reality_core/screens/auth/sign_in.dart';
 import 'package:reality_core/screens/auth/utils.dart';
@@ -28,7 +29,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final TextEditingController confirmPasswordEditingController =
       TextEditingController();
   bool _isLoading = false;
-
+  String? errorMessage;
   Uint8List? _image;
 
   @override
@@ -65,12 +66,21 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           builder: (context) => const Home(),
         ),
       );
+    } else if (emailEditingController.text.isEmpty ||
+        passwordEditingController.text.isEmpty ||
+        firstNameEditingController.text.isEmpty ||
+        secondNameEditingController.text.isEmpty) {
+      setState(() {
+        _isLoading = false;
+      });
+      Fluttertoast.showToast(msg: "Feilds cannot be empty");
     } else {
       setState(() {
         _isLoading = false;
       });
       // show the error
-      showSnackBar(context, res);
+      //showSnackBar(context, res);
+      Fluttertoast.showToast(msg: res);
     }
   }
 

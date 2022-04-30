@@ -29,12 +29,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         keyboardType: TextInputType.emailAddress,
         validator: (value) {
           if (value!.isEmpty) {
-            return ("Please Enter Your Email");
+            errorMessage = "Please Enter Your Email";
           }
           // reg expression for email validation
           if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
               .hasMatch(value)) {
-            return ("Please Enter a valid email");
+            errorMessage = "Please Enter a valid email";
           }
           return null;
         },
@@ -73,11 +73,20 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         ),
       ),
       onTap: () {
-        _auth.sendPasswordResetEmail(email: emailEditingController.text);
-        Navigator.of(context).pop();
-        Fluttertoast.showToast(
-            msg: "We sent you an Email to reset your password",
-            toastLength: Toast.LENGTH_LONG);
+        if (emailEditingController.text.isEmpty) {
+          errorMessage = "Please Enter Your Email";
+          Fluttertoast.showToast(msg: errorMessage!);
+        } else if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+            .hasMatch(emailEditingController.text)) {
+          errorMessage = "Please Enter a valid email";
+          Fluttertoast.showToast(msg: errorMessage!);
+        } else {
+          _auth.sendPasswordResetEmail(email: emailEditingController.text);
+          Navigator.of(context).pop();
+          Fluttertoast.showToast(
+              msg: "We sent you an Email to reset your password",
+              toastLength: Toast.LENGTH_LONG);
+        }
       },
     );
 

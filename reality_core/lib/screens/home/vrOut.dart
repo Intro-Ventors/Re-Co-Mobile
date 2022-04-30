@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 
+=======
+>>>>>>> ab5131d1889cddef28681c3da279768308ae9160
 
 class VROutScreen extends StatefulWidget {
   const VROutScreen({Key? key}) : super(key: key);
@@ -9,6 +12,7 @@ class VROutScreen extends StatefulWidget {
 }
 
 class _VROutScreenState extends State<VROutScreen> {
+<<<<<<< HEAD
   
 
   @override
@@ -17,5 +21,10 @@ class _VROutScreenState extends State<VROutScreen> {
       
       
     );
+=======
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold();
+>>>>>>> ab5131d1889cddef28681c3da279768308ae9160
   }
 }
