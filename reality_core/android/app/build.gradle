@@ -41,14 +41,14 @@ android {
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
-		debug.jniLibs.srcDirs += 'sanitizer'
+		//debug.jniLibs.srcDirs += 'sanitizer'
 		//debug.jniLibs.srcDirs += 'validation_layers'
     }
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.intro_ventors.reality_core"
-        minSdkVersion 21
+        minSdkVersion 24
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -60,12 +60,19 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
         }
+        debug {
+            signingConfig signingConfigs.debug
+        }
+        profile{
+            signingConfig signingConfigs.debug
+        }
+        innerTest {
+            //...
+            matchingFallbacks = ['debug', 'release']
+        }
     }
-
-	
-    	
-  	
 }
+
 
 flutter {
     source '../..'
@@ -74,4 +81,5 @@ flutter {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.google.android.gms:play-services-location:18.0.0'
+    implementation project(':unityLibrary')
 }
