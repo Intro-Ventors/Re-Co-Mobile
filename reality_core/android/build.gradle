@@ -15,9 +15,9 @@ buildscript {
 
 allprojects {
     repositories {
-        flatDir {
+        /* flatDir {
             dirs "${project(':unityLibrary').projectDir}/libs"
-        }
+        } */
 
         google()
         mavenCentral()

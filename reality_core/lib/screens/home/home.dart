@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reality_core/screens/home/bottom_panel.dart';
+import 'package:reality_core/screens/home/qr_code_scanner.dart';
 import 'package:reality_core/screens/home/vrOut.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
@@ -62,11 +63,8 @@ class HomeScreenState extends State<Home> {
                     child: FittedBox(
                       child: FloatingActionButton(
                         onPressed: () {
-                          /* Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const QRScanner(),
-                          )); */
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const VROutScreen(),
+                            builder: (context) => const QRScanner(),
                           ));
                         },
                         child: const Icon(Icons.power_settings_new_rounded,

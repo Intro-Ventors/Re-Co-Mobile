@@ -12,14 +12,19 @@ class _VRBackgroundsState extends State<VRBackgrounds> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            //adds a virtual background to collection
+          },
+        ),
         title: const Text(
-          "Memories",
+          "Virtual Backgrounds",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
-        leading: const BackButton(
-          color: Colors.white,
-        ),
-        backgroundColor: Colors.cyan,
       ),
       body: GridView.count(
         crossAxisCount: 4,
