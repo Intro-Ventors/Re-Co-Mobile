@@ -49,6 +49,7 @@ dependencies:
   provider: ^6.0.1
   uuid: ^3.0.5
   firebase_storage: ^10.2.3
+  flutter_unity_widget: ^2020.3.25
 
 dev_dependencies:
   flutter_test:

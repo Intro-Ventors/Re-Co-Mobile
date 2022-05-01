@@ -1,3 +1,6 @@
 [submodule "reality_core/graphics_engine/third_party/Firefly"]
 	path = reality_core/graphics_engine/third_party/Firefly
 	url = https://github.com/Intro-Ventors/Firefly
+[submodule "reality_core/unity/Re-Co-Unity"]
+	path = reality_core/unity/Re-Co-Unity
+	url = https://github.com/Intro-Ventors/Re-Co-Unity
